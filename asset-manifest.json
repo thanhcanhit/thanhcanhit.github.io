@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/thanhcanhit.github.io/static/css/main.74af036a.css",
-    "main.js": "/thanhcanhit.github.io/static/js/main.3dd74baf.js",
-    "static/js/787.133eb125.chunk.js": "/thanhcanhit.github.io/static/js/787.133eb125.chunk.js",
-    "static/media/hero.png": "/thanhcanhit.github.io/static/media/hero.5248df084697083b8835.png",
-    "static/media/Dot.png": "/thanhcanhit.github.io/static/media/Dot.aad640c6572b8df4642f.png",
-    "index.html": "/thanhcanhit.github.io/index.html",
-    "main.74af036a.css.map": "/thanhcanhit.github.io/static/css/main.74af036a.css.map",
-    "main.3dd74baf.js.map": "/thanhcanhit.github.io/static/js/main.3dd74baf.js.map",
-    "787.133eb125.chunk.js.map": "/thanhcanhit.github.io/static/js/787.133eb125.chunk.js.map"
+    "main.css": "/static/css/main.e8178c95.css",
+    "main.js": "/static/js/main.ccd94afd.js",
+    "static/js/787.133eb125.chunk.js": "/static/js/787.133eb125.chunk.js",
+    "static/media/hero.png": "/static/media/hero.5248df084697083b8835.png",
+    "static/media/Dot.png": "/static/media/Dot.aad640c6572b8df4642f.png",
+    "index.html": "/index.html",
+    "main.e8178c95.css.map": "/static/css/main.e8178c95.css.map",
+    "main.ccd94afd.js.map": "/static/js/main.ccd94afd.js.map",
+    "787.133eb125.chunk.js.map": "/static/js/787.133eb125.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.74af036a.css",
-    "static/js/main.3dd74baf.js"
+    "static/css/main.e8178c95.css",
+    "static/js/main.ccd94afd.js"
   ]
 }
