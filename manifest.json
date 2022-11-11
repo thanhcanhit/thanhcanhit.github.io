@@ -1,6 +1,6 @@
 {
   "short_name": "Cảnh dev",
-  "name": "Trang chủ của Thanh Cảnh",
+  "name": "Phần mềm nhảm nhí",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#6fc183",
+  "background_color": "#000000"
 }
