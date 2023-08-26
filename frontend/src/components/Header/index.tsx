@@ -1,11 +1,8 @@
-import Account from "./Account";
 import Logo from "./Logo";
-import SearchBar from "./SearchBar";
-import ToggleThemeButton from "./ToggleThemeButton";
 
 const Header = () => {
 	return (
-		<nav className="fixed inset-0 bottom-auto bg-white border-gray-200 shadow-sm dark:bg-gray-900 dark:border-gray-700">
+		<nav className="bg-white border-gray-200 shadow-sm dark:bg-gray-900 dark:border-gray-700">
 			<div className="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto">
 				<Logo />
 
@@ -13,7 +10,7 @@ const Header = () => {
 				<button
 					data-collapse-toggle="navbar-dropdown"
 					type="button"
-					className="inline-flex items-center justify-center w-10 h-10 p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+					className="inline-flex items-center justify-center w-10 h-10 p-2 text-sm rounded-lg text-slate-500 lg:hidden hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-200 dark:text-slate-400 dark:hover:bg-slate-700 dark:focus:ring-slate-600"
 					aria-controls="navbar-dropdown"
 					aria-expanded="false"
 				>
@@ -37,18 +34,18 @@ const Header = () => {
 
 				{/* Right */}
 				<div
-					className="hidden w-full md:block md:w-auto"
+					className="hidden w-full lg:block lg:w-auto"
 					id="navbar-dropdown"
 				>
-					<ul className="flex flex-col p-4 mt-4 font-medium border border-gray-100 rounded-lg md:p-0 bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+					<ul className="flex flex-col gap-2 p-4 mt-4 font-medium border border-gray-100 rounded-lg lg:gap-0 lg:p-0 bg-gray-50 lg:flex-row lg:space-x-8 lg:mt-0 lg:border-0 lg:bg-white dark:bg-gray-800 lg:dark:bg-gray-900 dark:border-gray-700">
 						<li className="self-center">
-							<ToggleThemeButton />
-						</li>
-						<li>
-							<SearchBar />
-						</li>
-						<li className="self-center ">
-							<Account />
+							{/* <Account /> */}
+							<button type="button" className="button-normal">
+								Login
+							</button>
+							<button type="button" className="button-normal">
+								Register
+							</button>
 						</li>
 					</ul>
 				</div>

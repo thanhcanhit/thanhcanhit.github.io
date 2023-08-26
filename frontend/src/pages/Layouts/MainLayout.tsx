@@ -9,7 +9,7 @@ const MainLayout = ({ children }: MainLayout) => {
 	return (
 		<>
 			<Header />
-			<main>{children}</main>
+			<main className="bg-normal">{children}</main>
 		</>
 	);
 };
