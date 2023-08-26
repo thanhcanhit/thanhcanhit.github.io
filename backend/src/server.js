@@ -4,9 +4,13 @@ import dotenv from "dotenv";
 import path from "path";
 import url from "url";
 import declareEndpoint from "./routes/index.js";
+import {connectDB} from "./config/db.js"
 
 // Environment variables
 dotenv.config();
+
+// Connect db
+connectDB();
 
 // Constants
 const __filename = url.fileURLToPath(import.meta.url);
