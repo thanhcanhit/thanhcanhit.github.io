@@ -1,4 +1,5 @@
 import Home from "../pages/Home";
+import NewPost from "../pages/NewPost";
 
 type Props = {
 	children?: React.ReactNode;
@@ -14,6 +15,10 @@ const routes: Route[] = [
 	{
 		path: "/",
 		element: Home,
+	},
+	{
+		path: "/new-post",
+		element: NewPost,
 	},
 ];
 

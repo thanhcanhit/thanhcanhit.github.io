@@ -9,7 +9,7 @@ const MainLayout = ({ children }: MainLayout) => {
 	return (
 		<>
 			<Header />
-			<main className="bg-normal">{children}</main>
+			<main className="min-h-screen bg-normal">{children}</main>
 		</>
 	);
 };
