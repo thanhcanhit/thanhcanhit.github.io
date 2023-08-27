@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import path from "path";
 import url from "url";
 import declareEndpoint from "./routes/index.js";
-import {connectDB} from "./config/db.js"
+import { connectDB } from "./config/db.js";
 
 // Environment variables
 dotenv.config();
@@ -21,6 +21,8 @@ const app = express();
 // Middleware
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Declare endpoints
 declareEndpoint(app);

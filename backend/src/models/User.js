@@ -2,13 +2,13 @@ import { Schema, model } from "mongoose";
 
 const userSchema = new Schema(
 	{
-		name: String,
-		avatar_path: String,
-		username: String,
+		name: { type: String, index: 1 },
+		avatar_path: { type: String, default: "" },
+		username: { type: String, unique: true },
 		password: String,
-		bio: String,
-		isAdmin: Boolean,
-		numPost: Number,
+		bio: { type: String, default: "" },
+		isAdmin: { type: Boolean, default: false },
+		numPost: { type: Number, default: 0 },
 	},
 	{ timestamps: true }
 );

@@ -1,15 +1,17 @@
 import { Schema, model } from "mongoose";
 
+Schema.Types.String.set("trim", true);
+
 const postSchema = new Schema(
 	{
-		title: String,
-		procLink: String,
-		sourceLink: String,
-		content: String,
-		tags: [String],
+		title: { type: String, index: 1 },
+		procLink: { type: String, default: "" },
+		sourceLink: { type: String, default: "" },
+		content: { type: String, default: "" },
+		tags: { type: [String], default: [] },
 		user_id: { type: Schema.ObjectId, ref: "User" },
-    rating: Number,
-    view: NumberF
+		rating: { type: Number, default: 0 },
+		view: { type: Number, default: 0 },
 	},
 	{ timestamps: true }
 );
