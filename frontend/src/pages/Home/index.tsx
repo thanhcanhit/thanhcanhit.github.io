@@ -1,5 +1,6 @@
 import Hero from "./Hero";
 import PostList from "./PostList";
+import SearchAndFilter from "./SearchAndFilter";
 import SkillMarquee from "./SkillMarquee";
 const Home = () => {
 	return (
@@ -7,6 +8,7 @@ const Home = () => {
 			<Hero />
 			<SkillMarquee />
 			<hr className="container" />
+			<SearchAndFilter />
 			<PostList />
 		</div>
 	);

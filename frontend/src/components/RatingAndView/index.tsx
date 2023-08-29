@@ -9,12 +9,11 @@ type RatingAndViewType = {
 const RatingAndView = ({ post }: RatingAndViewType) => {
 	return (
 		<div className="flex items-center justify-between">
-			<div>
-				<Rating rating={post.rating} />
-			</div>
-			<div className="flex items-center gap-2 text-normal">
+			<Rating rating={post.rating} />
+
+			<div className="flex items-center gap-1 text-sm">
 				<AiFillEye />
-				<span className="text-sm">{post.view}</span>
+				<span className="text-xs">{post.view}</span>
 			</div>
 		</div>
 	);

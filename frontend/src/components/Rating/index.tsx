@@ -1,3 +1,4 @@
+import { Popover } from "antd";
 import { BsStarFill, BsStar, BsStarHalf } from "react-icons/bs";
 
 type RatingType = {
@@ -17,7 +18,13 @@ const Rating = ({ rating }: RatingType) => {
 		return <span key={index}>{current}</span>;
 	});
 
-	return <div className="flex items-center gap-1 text-yellow">{starsRendered}</div>;
+	return (
+		<Popover content={<span>{rating.toFixed(2)}</span>}>
+			<div className="flex items-center gap-1 text-yellow">
+				{starsRendered}
+			</div>
+		</Popover>
+	);
 };
 
 export default Rating;

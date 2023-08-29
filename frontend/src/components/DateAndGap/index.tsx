@@ -1,9 +1,17 @@
 import { getDayGapString } from "../../util/time";
 
-const DateAndGap = ({ date }: { date: string | Date }) => {
+type DateAndGapType = { date: string | Date; hasTime?: boolean };
+
+const DateAndGap = ({ date, hasTime: hasTime }: DateAndGapType) => {
+	const dateInstance = new Date(date);
 	return (
-		<div className="flex justify-between text-xs font-semibold text-normal">
-			<span>{new Date(date).toLocaleDateString("vi-VN")}</span>
+		<div className="flex justify-between text-xs font-semibold">
+			<div>
+				<span className="text-blue-500">
+					{hasTime && dateInstance.toLocaleTimeString("vi-VN")}{" "}
+				</span>
+				<span>{dateInstance.toLocaleDateString("vi-VN")}</span>
+			</div>
 			<span>{getDayGapString(date)} trước</span>
 		</div>
 	);

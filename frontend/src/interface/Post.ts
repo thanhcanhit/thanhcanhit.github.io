@@ -1,6 +1,7 @@
 interface Post {
 	_id: string;
 	title: string;
+	shortDesc: string;
 	procLink: string;
 	img_path: string;
 	sourceLink: string;

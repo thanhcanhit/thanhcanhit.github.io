@@ -27,6 +27,15 @@ const getTotalItems = async () => {
 	} catch (err) {
 		return null;
 	}
-}
+};
 
-export { getPosts, getPostsWithQuery, getTotalItems };
+const getAllTags = async () => {
+	try {
+		const res = await axios.get(`/tag`);
+		return res.data;
+	} catch (err) {
+		return null;
+	}
+};
+
+export { getPosts, getPostsWithQuery, getTotalItems, getAllTags };

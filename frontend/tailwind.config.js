@@ -23,8 +23,9 @@ export default {
 			animation: {
 				wiggle: "wiggle 1s ease-in-out infinite",
 				spinSlow: "spin 5s linear infinite",
-				flyUp: "flyUp .5s ease-in-out",
-				float: "float 6s ease-in-out infinite;",
+				flyUp: "flyUp .4s ease-in-out",
+				flyDown: "flyDown .4s ease-in-out",
+				float: "float 6s ease-in-out infinite",
 			},
 			keyframes: {
 				wiggle: {
@@ -35,9 +36,9 @@ export default {
 					"0%": { transform: "translate(0, 16px)", opacity: 0 },
 					"100%": { transform: "translate(0, 0)", opacity: 1 },
 				},
-				tooltip: {
-					"0%": { transform: "translate(-50%, 8px)", opacity: 0 },
-					"100%": { transform: "translate(-50%, 0)", opacity: 1 },
+				flyDown: {
+					"0%": { transform: "translate(0, -16px)", opacity: 0 },
+					"100%": { transform: "translate(0, 0)", opacity: 1 },
 				},
 				float: {
 					"0%": {

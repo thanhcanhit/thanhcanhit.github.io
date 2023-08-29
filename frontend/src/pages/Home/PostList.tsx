@@ -13,9 +13,6 @@ const skeletonWhenLoading = (
 		<Skeleton avatar paragraph={{ rows: 4 }} />
 		<Skeleton avatar paragraph={{ rows: 4 }} />
 		<Skeleton avatar paragraph={{ rows: 4 }} />
-		<Skeleton avatar paragraph={{ rows: 4 }} />
-		<Skeleton avatar paragraph={{ rows: 4 }} />
-		<Skeleton avatar paragraph={{ rows: 4 }} />
 	</>
 );
 

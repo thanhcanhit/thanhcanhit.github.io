@@ -37,7 +37,7 @@ const PostCard = ({ post }: PostCardType) => {
 							<TagList tags={post.tags} />
 						</div>
 					</div>
-					<div>
+					<div className="flex flex-col gap-1 text-normal">
 						<RatingAndView post={post} />
 						<DateAndGap date={post.createdAt} />
 					</div>

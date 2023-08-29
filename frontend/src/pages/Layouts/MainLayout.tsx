@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 
 type MainLayout = {
 	children: React.ReactElement;
@@ -10,6 +11,7 @@ const MainLayout = ({ children }: MainLayout) => {
 		<>
 			<Header />
 			<main className="min-h-screen bg-normal">{children}</main>
+			<Footer />
 		</>
 	);
 };

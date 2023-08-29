@@ -19,7 +19,7 @@ function getDayGapString(day: string | Date) {
 			gapDate.getUTCMinutes(),
 		]; // Sử dụng getUTCHours() và getUTCMinutes() để lấy thời gian theo múi giờ UTC
 		if (hours > 0) dayGapString += `${hours} giờ`;
-		else  dayGapString += `${minutes} phút`;
+		else dayGapString += `${minutes} phút`;
 	} else {
 		dayGapString = `${gapDay} ngày`;
 		if (gapDay > 30) dayGapString = `${Math.round(gapDay / 30)} tháng`;

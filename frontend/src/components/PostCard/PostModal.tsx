@@ -4,6 +4,7 @@ import { Post } from "../../interface/Post";
 import { BsArrowRightShort } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import RatingAndView from "../RatingAndView";
+import DateAndGap from "../DateAndGap";
 
 type PostModalType = {
 	post: Post;
@@ -29,7 +30,13 @@ const PostModal = ({ post, isOpen, onCancel }: PostModalType) => {
 					</button>,
 				]}
 			>
-				<RatingAndView post={post} />
+				<div className="flex flex-col gap-1">
+					<DateAndGap date={post.createdAt} hasTime={true} />
+					<RatingAndView post={post} />
+				</div>
+				<p className="mb-2 text-sm italic whitespace-normal text-normal line-clamp-3">
+					{post.shortDesc}
+				</p>
 				<div className="line-clamp-5">{htmlParser(post.content)}</div>
 			</Modal>
 		</>

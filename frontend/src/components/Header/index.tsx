@@ -1,10 +1,14 @@
-import Logo from "./Logo";
+import Logo from "../Logo";
+import ToggleThemeButton from "../ToggleThemeButton";
 
 const Header = () => {
 	return (
 		<nav className="bg-white border-gray-200 shadow-sm dark:bg-gray-900 dark:border-gray-700">
 			<div className="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto">
-				<Logo />
+				<div className="flex gap-2">
+					<Logo />
+					<ToggleThemeButton />
+				</div>
 
 				{/* Mobile menu */}
 				<button

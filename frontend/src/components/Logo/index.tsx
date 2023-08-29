@@ -1,9 +1,9 @@
-import ToggleThemeButton from "./ToggleThemeButton";
+import { Link } from "react-router-dom";
 
 const Logo = () => {
 	return (
-		<div className="flex">
-			<a href="/" className="flex items-center">
+		<div className="flex justify-center">
+			<Link to="/" className="flex items-center">
 				{/* <img
 							src="https://flowbite.com/docs/images/logo.svg"
 							className="h-8 mr-3"
@@ -43,9 +43,7 @@ const Logo = () => {
 						</svg>
 					</button>
 				</div>
-			</a>
-
-			<ToggleThemeButton />
+			</Link>
 		</div>
 	);
 };
