@@ -5,7 +5,8 @@ Schema.Types.String.set("trim", true);
 const postSchema = new Schema(
 	{
 		title: { type: String, index: 1 },
-		img_path: {type: String, default: ""},
+		shortDesc: { type: String, max: 255, default: "" },
+		img_path: { type: String, default: "" },
 		procLink: { type: String, default: "" },
 		sourceLink: { type: String, default: "" },
 		content: { type: String, default: "" },
