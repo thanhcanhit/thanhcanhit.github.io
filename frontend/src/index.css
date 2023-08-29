@@ -20,7 +20,7 @@
 
 @layer utilities {
 	.bg-normal {
-		@apply bg-white dark:bg-gray-900
+		@apply bg-gray-100 dark:bg-gray-900
 	}
 
 	.text-normal {
