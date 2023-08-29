@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import dotenv from "dotenv";
+import cors from "cors";
 import path from "path";
 import url from "url";
 import declareEndpoint from "./routes/index.js";
@@ -19,6 +20,7 @@ const port = process.env.PORT || 4000;
 const app = express();
 
 // Middleware
+app.use(cors());
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));

@@ -19,10 +19,20 @@ class PostController {
 					message: "Completed",
 					data: {
 						post: restPost,
-						user: restUser
+						user: restUser,
 					},
 				});
 			}
+		} catch (err) {
+			next(err);
+		}
+	}
+
+	// [GET] /post/size
+	async getSize(req, res, next) {
+		try {
+			const numPosts = await Post.count();
+			res.json({ message: "Completed", data: numPosts });
 		} catch (err) {
 			next(err);
 		}

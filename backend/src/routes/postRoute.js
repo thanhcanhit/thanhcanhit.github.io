@@ -5,6 +5,7 @@ const router = Router();
 const controller = postController;
 
 router.post("/create", controller.create);
+router.get("/size", controller.getSize);
 router.get("/:id", controller.getOne);
 router.get("/", controller.getList);
 
