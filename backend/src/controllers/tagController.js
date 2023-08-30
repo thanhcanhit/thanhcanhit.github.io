@@ -15,7 +15,7 @@ class PostController {
 		}
 	}
 
-	// [POST] /tag/create
+	// [POST] /tag
 	async create(req, res, next) {
 		try {
 			const { name } = req.body;

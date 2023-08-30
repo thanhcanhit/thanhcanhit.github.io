@@ -38,7 +38,7 @@ class CommentController {
 		}
 	}
 
-	// [POST] /comment/create
+	// [POST] /comment
 	async create(req, res, next) {
 		try {
 			// Tạo mới comment

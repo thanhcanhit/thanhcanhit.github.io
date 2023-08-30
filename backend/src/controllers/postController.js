@@ -27,17 +27,6 @@ class PostController {
 			next(err);
 		}
 	}
-
-	// [GET] /post/size
-	async getSize(req, res, next) {
-		try {
-			const numPosts = await Post.count();
-			res.json({ message: "Completed", data: numPosts });
-		} catch (err) {
-			next(err);
-		}
-	}
-
 	// [GET] /post?limit=<number>&offset=number
 	async getList(req, res, next) {
 		try {
@@ -53,7 +42,35 @@ class PostController {
 		}
 	}
 
-	// [POST] /user/create
+	// [GET] /post/size
+	async getSize(req, res, next) {
+		try {
+			const numPosts = await Post.count();
+			res.json({ message: "Completed", data: numPosts });
+		} catch (err) {
+			next(err);
+		}
+	}
+
+	// [GET] /post/search?title=<string>&tags=<string[]>
+	async search(req, res, next) {
+		try {
+			let { title, tags } = req.query;
+			tags = tags.split(",");
+			const titlePattern = new RegExp(`^${title}`, "i");
+
+			const posts = await Post.find({
+				tags: { $all: tags },
+				title: { $regex: titlePattern },
+			});
+
+			res.json({ message: "Completed", data: { title, tags, posts } });
+		} catch (err) {
+			next(err);
+		}
+	}
+
+	// [POST] /user
 	async create(req, res, next) {
 		try {
 			const reqData = req.body;
