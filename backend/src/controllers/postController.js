@@ -34,7 +34,7 @@ class PostController {
 			if (!limit) limit = 10;
 			if (!offset) offset = 0;
 
-			const posts = await Post.find({}).skip(offset).limit(limit);
+			const posts = await Post.find({}).skip(offset).limit(limit).sort({createdAt: -1});;
 
 			res.json({ message: "Completed", data: posts });
 		} catch (err) {
@@ -62,7 +62,7 @@ class PostController {
 			const posts = await Post.find({
 				tags: { $all: tags },
 				title: { $regex: titlePattern },
-			});
+			}).sort({createdAt: -1});
 
 			res.json({ message: "Completed", data: { title, tags, posts } });
 		} catch (err) {

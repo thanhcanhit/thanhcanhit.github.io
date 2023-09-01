@@ -6,9 +6,12 @@ class UserController {
 	async getOne(req, res, next) {
 		try {
 			const reqUsername = req.params.username;
-			const user = await User.findOne({ username: reqUsername });
+			let user = await User.findOne({ username: reqUsername });
+
+			if (!user) user = await User.findOne({ _id: reqUsername });
 
 			if (!user) return res.json({ message: "Not found", data: {} });
+			
 			else {
 				const { isAdmin, username, password, ...rest } = user.toJSON();
 				res.json({ message: "Completed", data: rest });

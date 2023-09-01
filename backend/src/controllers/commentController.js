@@ -24,13 +24,28 @@ class CommentController {
 	async getCommentOfPost(req, res, next) {
 		try {
 			const postId = req.params.postId;
-			let { limit, offset } = req.query;
-			if (!limit) limit = 10;
-			if (!offset) offset = 0;
+			// let { limit, offset } = req.query;
+			// if (!limit) limit = 10;
+			// if (!offset) offset = 0;
 
-			const comments = await Comment.find({ post_id: postId })
-				.skip(offset)
-				.limit(limit);
+			const comments = await Comment.find({ post_id: postId }).sort({
+				createdAt: -1,
+			});
+			// .skip(offset)
+			// .limit(limit);
+
+			res.json({ message: "Completed", data: comments });
+		} catch (err) {
+			next(err);
+		}
+	}
+
+	// [GET] /comment/post/:postId/quantity
+	async getCommentQuantityOfPost(req, res, next) {
+		try {
+			const postId = req.params.postId;
+
+			const comments = await Comment.find({ post_id: postId }).count();
 
 			res.json({ message: "Completed", data: comments });
 		} catch (err) {
