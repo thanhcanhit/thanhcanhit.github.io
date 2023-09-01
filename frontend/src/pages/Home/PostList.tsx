@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Post } from "../../interface/Post";
 
 import { getPostsWithQuery, getTotalItems } from "../../api/index.js";

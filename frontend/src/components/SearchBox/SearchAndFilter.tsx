@@ -4,6 +4,11 @@ import type { SelectProps } from "antd";
 import { getAllTags } from "../../api";
 import SearchInput from "./SearchInput";
 import { BiSearch, BiSolidHide } from "react-icons/bi";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	searchTagsSelector,
+	setSearchTags,
+} from "./searchSlice";
 
 interface ItemProps {
 	label: string;
@@ -12,24 +17,24 @@ interface ItemProps {
 
 const SearchAndFilter = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const [value, setValue] = useState<string[]>();
 	const [options, setOptions] = useState<ItemProps[]>([]);
+	const searchTags = useSelector(searchTagsSelector);
+
+	const dispatch = useDispatch();
 
 	const selectProps: SelectProps = {
 		mode: "multiple",
 		allowClear: true,
 		autoClearSearchValue: true,
 		style: { width: "100%", color: "black" },
-		value,
+		value: searchTags,
 		options,
 		onChange: (newValue: string[]) => {
-			setValue(newValue);
+			dispatch(setSearchTags(newValue));
 		},
 		placeholder: "Chọn các tag bạn muốn tìm ",
 		maxTagCount: "responsive",
 	};
-
-	console.log(value);
 
 	useEffect(() => {
 		async function getTags() {

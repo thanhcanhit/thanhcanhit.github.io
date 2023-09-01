@@ -1,5 +1,5 @@
 import { Modal } from "antd";
-import htmlParser from "html-react-parser";
+import htmlParser, { Element } from "html-react-parser";
 import { Post } from "../../interface/Post";
 import { BsArrowRightShort } from "react-icons/bs";
 import { Link } from "react-router-dom";
@@ -34,10 +34,21 @@ const PostModal = ({ post, isOpen, onCancel }: PostModalType) => {
 					<DateAndGap date={post.createdAt} hasTime={true} />
 					<RatingAndView post={post} />
 				</div>
-				<p className="mb-2 text-sm italic whitespace-normal text-normal line-clamp-3">
+				<p className="mb-2 text-sm italic text-black whitespace-normal line-clamp-3">
 					{post.shortDesc}
 				</p>
-				<div className="line-clamp-5">{htmlParser(post.content)}</div>
+				<div className="line-clamp-5">
+					{htmlParser(post.content, {
+						replace: (domNode) => {
+							if (
+								domNode instanceof Element &&
+								domNode.attribs.src
+							) {
+								return <></>;
+							}
+						},
+					})}
+				</div>
 			</Modal>
 		</>
 	);

@@ -1,3 +1,4 @@
+import Detail from "../pages/Detail";
 import Home from "../pages/Home";
 import NewPost from "../pages/NewPost";
 
@@ -13,12 +14,16 @@ type Route = {
 
 const routes: Route[] = [
 	{
-		path: "/",
-		element: Home,
-	},
-	{
 		path: "/new-post",
 		element: NewPost,
+	},
+	{
+		path: "/post/:id",
+		element: Detail,
+	},
+	{
+		path: "/",
+		element: Home,
 	},
 ];
 
