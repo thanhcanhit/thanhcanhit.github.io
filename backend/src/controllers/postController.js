@@ -1,4 +1,5 @@
 import Post from "../models/Post.js";
+import User from "../models/User.js";
 
 class PostController {
 	// [GET] /post/:id
@@ -12,16 +13,28 @@ class PostController {
 			if (!post) res.json({ message: "Not found", data: {} });
 			else {
 				const { user_id, ...restPost } = post.toJSON();
-				const { password, isAdmin, ...restUser } = user_id;
+
 				post.view += 1;
 				await post.save();
-				res.json({
-					message: "Completed",
-					data: {
-						post: restPost,
-						user: restUser,
-					},
-				});
+
+				if (user_id) {
+					const { password, isAdmin, ...restUser } = user_id;
+
+					res.json({
+						message: "Completed",
+						data: {
+							post: restPost,
+							user: restUser,
+						},
+					});
+				} else {
+					res.json({
+						message: "Completed",
+						data: {
+							post: restPost,
+						},
+					});
+				}
 			}
 		} catch (err) {
 			next(err);
@@ -34,7 +47,10 @@ class PostController {
 			if (!limit) limit = 10;
 			if (!offset) offset = 0;
 
-			const posts = await Post.find({}).skip(offset).limit(limit).sort({createdAt: -1});;
+			const posts = await Post.find({})
+				.skip(offset)
+				.limit(limit)
+				.sort({ createdAt: -1 });
 
 			res.json({ message: "Completed", data: posts });
 		} catch (err) {
@@ -62,7 +78,7 @@ class PostController {
 			const posts = await Post.find({
 				tags: { $all: tags },
 				title: { $regex: titlePattern },
-			}).sort({createdAt: -1});
+			}).sort({ createdAt: -1 });
 
 			res.json({ message: "Completed", data: { title, tags, posts } });
 		} catch (err) {
@@ -75,10 +91,18 @@ class PostController {
 		try {
 			const reqData = req.body;
 
+			const { user_id } = reqData;
+
 			const post = new Post({
 				...reqData,
 			});
 			await post.save();
+			if (user_id) {
+				await User.findOneAndUpdate(
+					{ _id: user_id },
+					{ $inc: { numPost: 1 } }
+				);
+			}
 
 			res.json(post);
 		} catch (err) {
