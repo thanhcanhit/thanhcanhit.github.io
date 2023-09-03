@@ -1,5 +1,6 @@
 import axiosLib from "axios";
 import { CommentInterface } from "../interface/Comments";
+import { Post } from "../interface/Post";
 
 const API_URL = "http://localhost:4000";
 const axios = axiosLib.create({ baseURL: API_URL });
@@ -21,6 +22,16 @@ const getPost = async (id: string) => {
 		return null;
 	}
 };
+
+const createPost = async (data: Partial<Post>) => {
+	try {
+		await axios.post(`/post`, { ...data });
+		return true;
+	} catch (err) {
+		return false;
+	}
+};
+
 const getComments = async (postId: string) => {
 	try {
 		const res = await axios.get(`comment/post/${postId}`);
@@ -66,6 +77,15 @@ const getAllTags = async () => {
 	}
 };
 
+const createTag = async (name: string) => {
+	try {
+		await axios.post(`/tag`, { name: name });
+		return true;
+	} catch (err) {
+		return false;
+	}
+};
+
 const getUser = async (userId: string) => {
 	try {
 		const res = await axios.get(`/user/${userId}`);
@@ -93,4 +113,6 @@ export {
 	getUser,
 	getCommentsQuantity,
 	createComment,
+	createTag,
+	createPost,
 };

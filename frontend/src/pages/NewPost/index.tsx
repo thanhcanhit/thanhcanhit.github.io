@@ -1,96 +1,111 @@
+import { Button, Form, Input } from "antd";
 import TagSelect from "./TagSelect";
 import TextEditor from "./TextEditor";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { createPost } from "../../api";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const onFinishFailed = (errorInfo: any) => {
+	console.log("Failed:", errorInfo);
+};
 
 const NewPost = () => {
+	const [content, setContent] = useState<string>("");
+	const [tags, setTags] = useState<string[]>([]);
+
+	const navigate = useNavigate();
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const onFinish = async (values: any) => {
+		const newPost = {
+			...values,
+			content,
+			tags,
+			user_id: "64ead7f05ad00ed80d21ca32",
+		};
+		Object.keys(newPost).forEach((key) => {
+			if (!newPost[key]) {
+				delete newPost[key];
+			}
+		});
+		try {
+			await createPost(newPost);
+			navigate("/");
+			console.log("Success:", newPost);
+		} catch (err) {
+			console.log("Can't create");
+		}
+	};
+
 	return (
-		<div className="container pt-4 text-normal">
+		<div className="container py-4 text-normal">
 			<h1 className="mb-4 text-3xl font-semibold text-center">
 				Tạo bài viết mới
 			</h1>
-			<table className="w-full px-4 mx-auto border-separate md:max-w-3xl border-spacing-2">
-				<tbody>
-					<tr>
-						<td className="min-w-[150px] hidden md:block">
-							<span className="font-semibold">Tiêu đề:</span>
-						</td>
-						<td className="w-full">
-							<div className="relative flex-1 ">
-								<input
-									type="text"
-									id="floating_outlined"
-									className="block border px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-									placeholder=" "
-								/>
-								<label
-									htmlFor="floating_outlined"
-									className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
-								>
-									Tiêu đề mô tả bài viết của bạn
-								</label>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td className="min-w-[150px] hidden md:block">
-							<span className="font-semibold">
-								Link sản phẩm:
-							</span>
-						</td>
-						<td className="w-full">
-							<div className="relative flex-1 ">
-								<input
-									type="text"
-									id="proc_link"
-									className="block border px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-									placeholder=" "
-								/>
-								<label
-									htmlFor="proc_link"
-									className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
-								>
-									Nơi người khác có thể xem ứng dụng của bạn
-									(Optional)
-								</label>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td className="min-w-[150px] hidden md:block">
-							<span className="font-semibold">
-								Link source code:
-							</span>
-						</td>
-						<td className="w-full">
-							<div className="relative flex-1 ">
-								<input
-									type="text"
-									id="src_link"
-									className="block border px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-									placeholder=" "
-								/>
-								<label
-									htmlFor="src_link"
-									className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
-								>
-									Nếu bạn muốn chia sẻ code cho mọi người
-									(Optional)
-								</label>
-							</div>
-						</td>
-					</tr>
-					<TagSelect />
-				</tbody>
-			</table>
-			<div>
-				<h4 className="my-4 text-center">Nội dung bài viết</h4>
-				<TextEditor />
-			</div>
+			<div className="p-8 bg-white rounded-lg w-[min(1000px,100%)] mx-auto border-normal">
+				<Form
+					name="basic"
+					labelCol={{ span: 6 }}
+					wrapperCol={{ span: 18 }}
+					onFinish={onFinish}
+					onFinishFailed={onFinishFailed}
+					autoComplete="off"
+				>
+					<Form.Item
+						label="Tiêu đề"
+						name="title"
+						rules={[
+							{
+								required: true,
+								message: "Vui lòng nhập tiêu đề bài viết!",
+							},
+						]}
+					>
+						<Input placeholder="Tiêu đề bài viết" />
+					</Form.Item>
 
-			<div className="flex justify-center mt-8">
-				<br />
-				<button className="mx-auto button-normal ">
-					Hoàn tất & đăng tải
-				</button>
+					<Form.Item
+						label="Mô tả sơ lược"
+						name="shortDesc"
+						rules={[
+							{
+								required: true,
+								message: "Vui lòng nhập mô tả sơ lược",
+							},
+						]}
+					>
+						<Input placeholder="Mô tả về bài viết này" />
+					</Form.Item>
+
+					<Form.Item label="Ảnh đại diện" name="img_path">
+						<Input placeholder="Địa chỉ hình ảnh đại diện cho bài viết" />
+					</Form.Item>
+
+					<Form.Item label="Sản phẩm" name="procLink">
+						<Input placeholder="Địa chỉ tới sản phẩm" />
+					</Form.Item>
+
+					<Form.Item label="Mã nguồn" name="sourceLink">
+						<Input placeholder="Địa chỉ tới source code" />
+					</Form.Item>
+
+					<Form.Item label="Gắn thẻ bài viết" name="tags">
+						<TagSelect value={tags} setValue={setTags} />
+					</Form.Item>
+
+					<TextEditor content={content} setContent={setContent} />
+
+					<Form.Item wrapperCol={{ span: 24 }}>
+						<Button
+							type="primary"
+							htmlType="submit"
+							className="w-full mt-2"
+						>
+							Hoàn tất và đăng tải
+						</Button>
+					</Form.Item>
+				</Form>
 			</div>
 		</div>
 	);

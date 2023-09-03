@@ -7,7 +7,7 @@ interface User {
 	password: string;
 	isAdmin: boolean;
 	numPost: number;
-	daySigning: Date;
+	createdAt: Date;
 }
 
 export type { User };

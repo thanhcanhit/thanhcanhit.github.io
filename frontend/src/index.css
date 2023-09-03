@@ -2,7 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
+.ant-btn.ant-btn-primary {
+	background-color: #1677ff!important;
+}
+
+.jodit-ui-button.jodit-ui-button_variant_primary {
+	background-color: #1677ff!important;
+}
+
+@layer base { 	
+
+		/* width */
+	::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #f1f1f1;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: #515151;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		background: #2c2c2c;
+	}
 }
 
 @layer components {
@@ -34,5 +62,9 @@
 
 	.text-normal {
 		@apply text-gray-900 dark:text-white;
+	}
+
+	.jodic-render a{
+		@apply font-medium text-blue-600 transition-all dark:text-blue-500 hover:brightness-150 hover:underline;
 	}
 }

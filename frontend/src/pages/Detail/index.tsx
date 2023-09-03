@@ -13,8 +13,10 @@ import CommentBox from "./CommentBox";
 import { BsSendFill } from "react-icons/bs";
 import { CommentInterface } from "../../interface/Comments";
 import Comment from "./Comment";
+import UserDisplay from "../../components/UserDisplay";
+import {} from "jodit-react";
 
-const imgClassName = "object-contain mx-auto rounded-md max-h-[60vh]";
+const imgClassName = "object-contain mx-auto rounded-md";
 const options: HTMLReactParserOptions = {
 	replace: (domNode) => {
 		if (domNode instanceof Element && domNode.attribs.src) {
@@ -30,7 +32,7 @@ const options: HTMLReactParserOptions = {
 const Detail = () => {
 	const { id } = useParams();
 	const [post, setPost] = useState<Post>();
-	const [author, setAuthor] = useState<User>();
+	const [author, setAuthor] = useState<User | null>(null);
 	const [comments, setComments] = useState<CommentInterface[]>([]);
 	const [api, contextHolder] = notification.useNotification();
 	const [seed, setSeed] = useState<number | null>(null);
@@ -69,6 +71,7 @@ const Detail = () => {
 	useEffect(() => {
 		const getData = async () => {
 			const res = await getPost(String(id));
+			console.log(res.data);
 			setPost(res.data.post);
 			setAuthor(res.data.user);
 		};
@@ -86,7 +89,7 @@ const Detail = () => {
 		window.scrollTo(0, 0);
 	}, []);
 
-	if (!post || !author)
+	if (!post)
 		return (
 			<div className="flex justify-center">
 				<Spin />
@@ -108,10 +111,10 @@ const Detail = () => {
 						<div className="flex justify-center w-full mb-2 ">
 							<Image
 								src={post.img_path}
-								className={imgClassName}
+								className={imgClassName + " max-h-[60vh]"}
 							/>
 						</div>
-						<div className="mt-4">
+						<div className="max-w-full mt-4 jodic-render">
 							{htmlParser(post.content, options)}
 						</div>
 					</div>
@@ -126,6 +129,7 @@ const Detail = () => {
 								className="flex flex-col gap-1 my-2 text-lg"
 								key={seed}
 							>
+								{author && <UserDisplay user={author} />}
 								<DateAndGap date={post.createdAt} hasTime />
 								<RatingAndView post={post} />
 							</div>

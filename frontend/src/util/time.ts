@@ -1,19 +1,28 @@
 function getTimestampGap(day: string | Date) {
+	// Lấy thời gian hiện tại ở định dạng mili giây
 	const currentUTC = new Date().getTime();
-	const inputUTC = new Date(day).getTime();
 
-	const dayGap = new Date(currentUTC - inputUTC);
+	// Chuyển đổi ngày đầu vào thành đối tượng Date nếu nó không phải là một đối tượng Date
+	const inputDate = day instanceof Date ? day : new Date(day);
 
-	return dayGap;
+	// Lấy thời gian của ngày được truyền vào ở định dạng mili giây
+	const inputUTC = inputDate.getTime();
+
+	// Tính khoảng thời gian giữa hai ngày và chuyển kết quả thành mili giây
+	const timestampGap = currentUTC - inputUTC;
+
+	return timestampGap;
 }
+
 function getDayGapString(day: string | Date) {
 	const timeStamp = getTimestampGap(day);
+	console.log(timeStamp);
 	let dayGapString = "";
-	const gapDate = new Date(timeStamp);
 
-	const gapDay = gapDate.getUTCDate(); // Sử dụng getUTCDate() để lấy ngày theo múi giờ UTC
-
-	if (gapDay === 1) {
+	const gapDay = Math.floor(Number(timeStamp) / 86400000); // Sử dụng getUTCDate() để lấy ngày theo múi giờ UTC
+	console.log("gapday:", gapDay);
+	if (gapDay === 0) {
+		const gapDate = new Date(timeStamp);
 		const [hours, minutes] = [
 			gapDate.getUTCHours(),
 			gapDate.getUTCMinutes(),

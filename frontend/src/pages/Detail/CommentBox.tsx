@@ -54,8 +54,8 @@ const CommentBox = ({ onSubmit }: CommentBoxType) => {
 				description="Mọi người đều sẽ thấy bình luận của bạn"
 				onConfirm={handleSubmit}
 				icon={null}
-				color="#6EE7B7"
 				okText="Bình luận"
+				cancelText="Để sau"
 			>
 				<button className="gap-2 px-8 w-fit button-primary ">
 					<BsSendFill />

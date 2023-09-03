@@ -1,14 +1,17 @@
 import JoditEditor from "jodit-react";
-import { useState } from "react";
+import React from "react";
 
-const TextEditor = () => {
-	const [content, setContent] = useState<string>("");
+type TextEditorType = {
+	content: string;
+	setContent: React.Dispatch<React.SetStateAction<string>>;
+};
 
+const TextEditor = ({ content, setContent }: TextEditorType) => {
 	return (
 		<JoditEditor
 			className="text-black"
 			value={content}
-			onChange={(newContent) => setContent(newContent)}
+			onBlur={(newContent) => setContent(newContent)}
 		/>
 	);
 };
