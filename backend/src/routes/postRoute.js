@@ -1,5 +1,6 @@
 import { Router } from "express";
 import postController from "../controllers/postController.js";
+import middlewareController from "./../controllers/middlewareController.js";
 
 const router = Router();
 const controller = postController;
@@ -7,7 +8,7 @@ const controller = postController;
 router.get("/size", controller.getSize);
 router.get("/search", controller.search);
 router.get("/:id", controller.getOne);
-router.post("/", controller.create);
+router.post("/", middlewareController.verify, controller.create);
 router.get("/", controller.getList);
 
 export default router;

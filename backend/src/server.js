@@ -5,6 +5,7 @@ import cors from "cors";
 import path from "path";
 import url from "url";
 import declareEndpoint from "./routes/index.js";
+import cookieParser from "cookie-parser";
 import { connectDB } from "./config/db.js";
 
 // Environment variables
@@ -22,6 +23,7 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(morgan("dev"));
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

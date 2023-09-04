@@ -1,10 +1,15 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-async function encode(string) {
+function encode(string) {
 	const salt = bcrypt.genSaltSync(10);
 	const hash = bcrypt.hashSync(string, salt);
 	return hash;
+}
+
+async function compare(password, hashPassword) {
+	const match = await bcrypt.compare(password, hashPassword);
+	return match;
 }
 
 function createAccessToken(payload) {
@@ -15,4 +20,4 @@ function createRefreshToken(payload) {
 	return jwt.sign(payload, process.env.REFRESH_KEY, { expiresIn: "30d" });
 }
 
-export { encode, createAccessToken, createRefreshToken };
+export { encode, compare, createAccessToken, createRefreshToken };

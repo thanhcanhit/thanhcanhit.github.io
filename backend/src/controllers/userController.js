@@ -35,28 +35,6 @@ class UserController {
 			next(err);
 		}
 	}
-
-	// [POST] /user/create
-	async create(req, res, next) {
-		try {
-			const reqData = req.body;
-			const hashPassword = await encode(reqData.password);
-
-			try {
-				const user = new User({
-					...reqData,
-					password: hashPassword,
-				});
-				await user.save();
-
-				res.json(user);
-			} catch (createError) {
-				res.json({ message: "username already exists" });
-			}
-		} catch (err) {
-			next(err);
-		}
-	}
 }
 
 export default new UserController();
