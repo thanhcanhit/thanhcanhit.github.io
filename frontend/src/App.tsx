@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "./pages/Layouts/MainLayout";
 import routes from "./routes";
+import GoTopButton from "./components/GoTopButton";
 
 const routesRendered = routes.map((route) => {
 	// By default, route.layout is undefined
@@ -27,6 +28,7 @@ function App() {
 	return (
 		<BrowserRouter>
 			<Routes>{routesRendered}</Routes>
+			<GoTopButton />
 		</BrowserRouter>
 	);
 }

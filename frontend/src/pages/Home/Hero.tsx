@@ -1,7 +1,17 @@
+import { IoIosArrowDown } from "react-icons/io";
 import heroImg from "./imgs/hero.svg";
-import {AiFillGithub} from "react-icons/ai"
+import { AiFillGithub } from "react-icons/ai";
+import { Popover, Tooltip } from "antd";
 
 const Hero = () => {
+	const scrollToBottom = () => {
+		const windowHeight = document.body.scrollHeight;
+		window.scrollTo({
+			top: windowHeight,
+			behavior: "smooth",
+		});
+	};
+
 	return (
 		<div className="container grid items-center grid-cols-1 py-8 md:grid-cols-2">
 			<img src={heroImg} className="w-full animate-float" />
@@ -11,38 +21,38 @@ const Hero = () => {
 						<h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
 							Chào bạn, mình là Nguyễn Thanh Cảnh
 						</h1>
-						<p className="sub-heading">
-							Mình đang theo học Software Engineer tại IUH. <br/> Tại đây lưu giữ những dự án của mình và source code của chúng nếu các bạn muốn nghiên cứu.
+						<p className="text-base sub-heading">
+							<span className="text-xl font-semibold">
+								🎯 Mình đang theo học Software Engineer tại IUH.
+							</span>{" "}
+							<br />
+							<span className="block w-full pl-4 mt-4 text-left border-l-4 border-gray-500 dark:border-gray-200">
+								Tại đây lưu giữ những dự án của mình trong suốt
+								quá trình học tập & nghiên cứu và tất nhiên
+								source code của chúng nếu các bạn muốn tham khảo
+								& nghiên cứu.
+							</span>
 						</p>
 						<div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-							<a
-								href="#"
-								className="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900"
-							>
-								Đăng ký viết bài
-								<svg
-									className="w-3.5 h-3.5 ml-2"
-									aria-hidden="true"
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 14 10"
+							<Popover content="Đến trang github">
+								<a
+									href="https://github.com/thanhcanhit"
+									target="_blank"
+									className="inline-flex items-center justify-center gap-2 px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
 								>
-									<path
-										stroke="currentColor"
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={2}
-										d="M1 5h12m0 0L9 1m4 4L9 9"
-									/>
-								</svg>
-							</a>
-							<a
-								href="https://github.com/thanhcanhit"
-								className="inline-flex items-center justify-center gap-2 px-5 py-3 text-base font-medium text-center text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-							>
-								<AiFillGithub/>
-								Github
-							</a>
+									<AiFillGithub />
+									Github
+								</a>
+							</Popover>
+							<Popover content="Đến phần thông tin ở cuối trang">
+								<button
+									onClick={scrollToBottom}
+									className="inline-flex items-center justify-center gap-2 px-5 py-3 text-base font-medium text-center text-white rounded-lg bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:ring-emerald-300 dark:focus:ring-emerald-900"
+								>
+									About me
+									<IoIosArrowDown className="relative top-[2px]" />
+								</button>
+							</Popover>
 						</div>
 					</div>
 				</section>
