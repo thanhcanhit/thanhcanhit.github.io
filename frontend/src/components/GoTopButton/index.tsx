@@ -12,7 +12,6 @@ const GoTopButton = () => {
 	useEffect(() => {
 		const handleScroll = () => {
 			const currentY = window.scrollY;
-			console.log(currentY);
 			setShow(currentY > 100);
 		};
 

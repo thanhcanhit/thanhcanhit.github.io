@@ -1,7 +1,7 @@
 import { IoIosArrowDown } from "react-icons/io";
 import heroImg from "./imgs/hero.svg";
 import { AiFillGithub } from "react-icons/ai";
-import { Popover, Tooltip } from "antd";
+import { Popover } from "antd";
 
 const Hero = () => {
 	const scrollToBottom = () => {
