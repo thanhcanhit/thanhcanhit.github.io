@@ -24,9 +24,7 @@ class AuthController {
 			const isCorrectPassword = await compare(password, user.password);
 
 			if (!isCorrectPassword) {
-				return res
-					.status(401)
-					.json({ message: "Password is not correct" });
+				return res.status(401).json({ message: "Password is not correct" });
 			} else {
 				const { password, ...payload } = user.toJSON();
 				const accessToken = createAccessToken(payload);
@@ -92,7 +90,7 @@ class AuthController {
 
 				res.json(user);
 			} catch (createError) {
-				res.json({ message: "username already exists" });
+				res.json({ error: "username already exists" });
 			}
 		} catch (err) {
 			next(err);
