@@ -43,11 +43,13 @@ const Detail = () => {
 
 	const handleSubmitComment = async (
 		name: string | null,
+		user_id: string | null,
 		content: string,
 		rating: number
 	) => {
 		try {
 			let newComment: Partial<CommentInterface> = {
+				user_id: user_id,
 				content: content,
 				rating: rating,
 				post_id: id,
@@ -125,10 +127,7 @@ const Detail = () => {
 					<div className="w-full p-4 mb-4 bg-white rounded-lg shadow-sm border-normal dark:bg-gray-800">
 						{/* Detail and link */}
 						<div>
-							<div
-								className="flex flex-col gap-1 my-2 text-lg"
-								key={seed}
-							>
+							<div className="flex flex-col gap-1 my-2 text-lg" key={seed}>
 								{author && <UserDisplay user={author} />}
 								<DateAndGap date={post.createdAt} hasTime />
 								<RatingAndView post={post} />

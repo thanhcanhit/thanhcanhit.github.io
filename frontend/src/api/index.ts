@@ -1,6 +1,13 @@
 import axiosLib from "axios";
 import { CommentInterface } from "../interface/Comments";
 import { Post } from "../interface/Post";
+import { Dispatch } from "@reduxjs/toolkit";
+import {
+	getUserFailed,
+	getUserStarted,
+	getUserSuccess,
+	userLogout,
+} from "../redux/userSlice";
 
 const API_URL = "http://localhost:4000";
 const axios = axiosLib.create({ baseURL: API_URL });
@@ -103,6 +110,45 @@ async function createComment(comment: Partial<CommentInterface>) {
 		return false;
 	}
 }
+
+async function login(
+	dispatch: Dispatch,
+	data: { username: string; password: string }
+) {
+	try {
+		dispatch(getUserStarted());
+		const res = await axios.post(`/auth/login`, { ...data });
+		dispatch(getUserSuccess(res.data.data));
+		return true;
+	} catch (err) {
+		dispatch(getUserFailed("Can't login"));
+		return false;
+	}
+}
+
+async function register(data: {
+	username: string;
+	password: string;
+	name: string;
+}) {
+	try {
+		const res = await axios.post(`/auth/register`, { ...data });
+		return Boolean(!res.data.error);
+	} catch (err) {
+		return false;
+	}
+}
+
+async function logout(dispatch: Dispatch) {
+	try {
+		dispatch(userLogout());
+		await axios.post(`/auth/logout`);
+		return true;
+	} catch (err) {
+		return false;
+	}
+}
+
 export {
 	getPosts,
 	getPostsWithQuery,
@@ -115,4 +161,7 @@ export {
 	createComment,
 	createTag,
 	createPost,
+	login,
+	logout,
+	register,
 };

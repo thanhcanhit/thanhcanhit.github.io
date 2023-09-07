@@ -16,11 +16,9 @@ function getTimestampGap(day: string | Date) {
 
 function getDayGapString(day: string | Date) {
 	const timeStamp = getTimestampGap(day);
-	console.log(timeStamp);
 	let dayGapString = "";
 
 	const gapDay = Math.floor(Number(timeStamp) / 86400000); // Sử dụng getUTCDate() để lấy ngày theo múi giờ UTC
-	console.log("gapday:", gapDay);
 	if (gapDay === 0) {
 		const gapDate = new Date(timeStamp);
 		const [hours, minutes] = [

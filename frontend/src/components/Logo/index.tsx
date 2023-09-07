@@ -4,12 +4,7 @@ const Logo = () => {
 	return (
 		<div className="flex justify-center">
 			<Link to="/" className="flex items-center">
-				{/* <img
-							src="https://flowbite.com/docs/images/logo.svg"
-							className="h-8 mr-3"
-							alt="Flowbite Logo"
-						/> */}
-				<span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+				<span className="self-center text-xl font-semibold md:text-2xl whitespace-nowrap dark:text-white">
 					<span className="text-emerald-600">thanhcanhit</span>
 					.github.io
 				</span>

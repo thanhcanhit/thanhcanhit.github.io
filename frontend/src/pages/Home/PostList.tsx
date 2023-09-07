@@ -3,16 +3,16 @@ import { Post } from "../../interface/Post";
 
 import { getPostsWithQuery, getTotalItems } from "../../api/index.js";
 import PostCard from "../../components/PostCard/index.js";
-import { Pagination, Skeleton } from "antd";
+import { Pagination, Skeleton, Spin } from "antd";
 
 const skeletonWhenLoading = (
 	<>
-		<Skeleton avatar paragraph={{ rows: 4 }} />
-		<Skeleton avatar paragraph={{ rows: 4 }} />
-		<Skeleton avatar paragraph={{ rows: 4 }} />
-		<Skeleton avatar paragraph={{ rows: 4 }} />
-		<Skeleton avatar paragraph={{ rows: 4 }} />
-		<Skeleton avatar paragraph={{ rows: 4 }} />
+		<Skeleton avatar loading paragraph={{ rows: 4 }} />
+		<Skeleton avatar loading paragraph={{ rows: 4 }} />
+		<Skeleton avatar loading paragraph={{ rows: 4 }} />
+		<Skeleton avatar loading paragraph={{ rows: 4 }} />
+		<Skeleton avatar loading paragraph={{ rows: 4 }} />
+		<Skeleton avatar loading paragraph={{ rows: 4 }} />
 	</>
 );
 

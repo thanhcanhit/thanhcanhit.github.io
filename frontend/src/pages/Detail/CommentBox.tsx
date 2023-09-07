@@ -1,10 +1,13 @@
 import { Input, Popconfirm, Rate } from "antd";
-import {  BsSendFill } from "react-icons/bs";
+import { BsSendFill } from "react-icons/bs";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { userSelector } from "../../redux/userSlice";
 
 type CommentBoxType = {
 	onSubmit: (
 		name: string | null,
+		user_id: string | null,
 		content: string,
 		rating: number
 	) => Promise<void>;
@@ -14,9 +17,14 @@ const CommentBox = ({ onSubmit }: CommentBoxType) => {
 	const [name, setName] = useState<string>("");
 	const [content, setContent] = useState<string>("");
 	const [rating, setRating] = useState<number>(5);
+	const user = useSelector(userSelector);
 
 	const handleSubmit = async () => {
-		onSubmit(name ? name : null, content, rating);
+		let nameSubmit: string | null;
+		if (user.user) nameSubmit = user.user?.name;
+		else nameSubmit = name ? name : null;
+
+		onSubmit(nameSubmit, user.user?._id || null, content, rating);
 		setName("");
 		setContent("");
 		setRating(5);
@@ -31,15 +39,17 @@ const CommentBox = ({ onSubmit }: CommentBoxType) => {
 				value={rating}
 				onChange={(value) => setRating(value)}
 			/>
-			<Input
-				showCount
-				value={name}
-				maxLength={50}
-				onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-					setName(e.target.value)
-				}
-				placeholder="Tên hiển thị (optional)"
-			/>
+			{!user.user && (
+				<Input
+					showCount
+					value={name}
+					maxLength={50}
+					onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+						setName(e.target.value)
+					}
+					placeholder="Tên hiển thị (optional)"
+				/>
+			)}
 
 			<Input.TextArea
 				value={content}

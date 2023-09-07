@@ -5,6 +5,7 @@ import { useState } from "react";
 import { User } from "../../interface/User";
 import { useEffect } from "react";
 import { getUser } from "../../api";
+import UserDisplay from "../../components/UserDisplay";
 
 const animalsName = [
 	"Sư tử",
@@ -61,16 +62,19 @@ const Comment = ({ comment }: { comment: CommentInterface }) => {
 
 	useEffect(() => {
 		const getData = async () => {
+			if (!comment.user_id) return;
 			const res = await getUser(comment.user_id);
 			setUser(res.data);
 		};
 
-		if (comment.user_id != null) getData();
+		getData();
 	}, [comment.user_id]);
 
 	return (
 		<div className="flex flex-col p-4 rounded-md border-normal">
-			<div>{name}</div>
+			<div className="mb-2">
+				{user ? <UserDisplay user={user} /> : <div>{name}</div>}
+			</div>
 			<div className="flex justify-between text-sm">
 				<Rating rating={comment.rating} />
 				<DateDisplay date={comment.createdAt} hasTime />
