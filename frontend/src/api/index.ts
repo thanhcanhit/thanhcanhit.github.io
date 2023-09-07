@@ -8,6 +8,7 @@ import {
 	getUserSuccess,
 	userLogout,
 } from "../redux/userSlice";
+import store from "../redux/store";
 
 const API_URL = "http://localhost:4000";
 const axios = axiosLib.create({ baseURL: API_URL });
@@ -31,9 +32,17 @@ const getPost = async (id: string) => {
 };
 
 const createPost = async (data: Partial<Post>) => {
+	const token = store.getState().user.user?.accessToken;
 	try {
-		await axios.post(`/post`, { ...data });
-		return true;
+		const res = await axios.post(
+			`/post`,
+			{
+				...data,
+			},
+			{ headers: { authorization: `Beaer ${token}` } }
+		);
+
+		return Boolean(!res.data.err);
 	} catch (err) {
 		return false;
 	}

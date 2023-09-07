@@ -8,6 +8,7 @@ interface User {
 	isAdmin: boolean;
 	numPost: number;
 	createdAt: Date;
+	accessToken: string;
 }
 
 export type { User };

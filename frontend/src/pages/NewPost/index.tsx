@@ -1,9 +1,12 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, message } from "antd";
 import TagSelect from "./TagSelect";
 import TextEditor from "./TextEditor";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../../api";
+import { useSelector } from "react-redux";
+import { userSelector } from "../../redux/userSlice";
+import Forbidden from "../../components/Forbidden";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onFinishFailed = (errorInfo: any) => {
@@ -11,10 +14,15 @@ const onFinishFailed = (errorInfo: any) => {
 };
 
 const NewPost = () => {
+	const [messageApi, contextHolder] = message.useMessage();
+	const user = useSelector(userSelector);
+
 	const [content, setContent] = useState<string>("");
 	const [tags, setTags] = useState<string[]>([]);
 
 	const navigate = useNavigate();
+
+	if (!user || !user.user?.isAdmin) return <Forbidden />;
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const onFinish = async (values: any) => {
@@ -30,9 +38,14 @@ const NewPost = () => {
 			}
 		});
 		try {
-			await createPost(newPost);
-			navigate("/");
-			console.log("Success:", newPost);
+			const isCompleted = await createPost(newPost);
+			console.log(isCompleted);
+			if (isCompleted) {
+				messageApi.open({
+					type: "success",
+					content: "Đăng tải bài viết thành công",
+				});
+			}
 		} catch (err) {
 			console.log("Can't create");
 		}
@@ -40,11 +53,13 @@ const NewPost = () => {
 
 	return (
 		<div className="container py-4 text-normal">
+			{contextHolder}
 			<h1 className="mb-4 text-3xl font-semibold text-center">
 				Tạo bài viết mới
 			</h1>
 			<div className="p-8 bg-white rounded-lg w-[min(1000px,100%)] mx-auto border-normal">
 				<Form
+					key={"newpost"}
 					name="basic"
 					labelCol={{ span: 6 }}
 					wrapperCol={{ span: 18 }}
@@ -97,11 +112,7 @@ const NewPost = () => {
 					<TextEditor content={content} setContent={setContent} />
 
 					<Form.Item wrapperCol={{ span: 24 }}>
-						<Button
-							type="primary"
-							htmlType="submit"
-							className="w-full mt-2"
-						>
+						<Button type="primary" htmlType="submit" className="w-full mt-2">
 							Hoàn tất và đăng tải
 						</Button>
 					</Form.Item>

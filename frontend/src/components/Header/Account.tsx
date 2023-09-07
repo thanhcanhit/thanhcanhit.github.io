@@ -29,27 +29,25 @@ const Account = () => {
 		await logout(dispatch);
 	};
 
+	const logoutButton = {
+		key: "logout",
+		label: (
+			<Button className="w-full" onClick={handleLogoutClick}>
+				Đăng xuất
+			</Button>
+		),
+	};
+
 	const menuItems = userData.isAdmin
 		? {
-				items: [
-					...adminItems,
-					{
-						key: "logout",
-						label: <Button onClick={handleLogoutClick}>Đăng xuất</Button>,
-					},
-				],
+				items: [...adminItems, logoutButton],
 		  }
 		: {
-				items: [
-					{
-						key: "logout",
-						label: <Button onClick={handleLogoutClick}>Đăng xuất</Button>,
-					},
-				],
+				items: [logoutButton],
 		  };
 	return (
 		<>
-			<Dropdown menu={menuItems} placement="bottom">
+			<Dropdown menu={menuItems} placement="bottom" trigger={["click"]}>
 				<button className="flex items-center gap-2 button-normal">
 					<UserAvatar source={userData.avatar_path} size={30} />
 					<p className="text-normal">{userData.name}</p>
