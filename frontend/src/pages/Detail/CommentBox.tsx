@@ -2,7 +2,7 @@ import { Input, Popconfirm, Rate } from "antd";
 import { BsSendFill } from "react-icons/bs";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { userSelector } from "../../redux/userSlice";
+import { userSelector } from "../../redux/authSlice";
 
 type CommentBoxType = {
 	onSubmit: (

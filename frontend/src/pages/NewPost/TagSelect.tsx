@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Divider, Input, Select, Space, Button } from "antd";
 import type { InputRef, SelectProps } from "antd";
-import { createTag, getAllTags } from "../../api";
+import { createTag, getAllTags } from "../../api/tagRequest";
 
 interface ItemProps {
 	label: string;

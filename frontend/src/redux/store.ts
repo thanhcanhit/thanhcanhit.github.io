@@ -10,7 +10,7 @@ import {
 	REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import userSlice from "./userSlice";
+import userSlice from "./authSlice";
 
 const persistConfig = {
 	key: "jfkdajgIJDIOJSFOIDSkdsaln;bsajfdlkjdsiiisii",
@@ -18,7 +18,7 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-	user: userSlice,
+	auth: userSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

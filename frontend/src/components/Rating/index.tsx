@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Popover } from "antd";
 import { BsStarFill, BsStar, BsStarHalf } from "react-icons/bs";
-import { getCommentsQuantity } from "../../api";
+import { getCommentsQuantity } from "../../api/commentRequest";
 
 type RatingType = {
 	rating: number;

@@ -2,11 +2,10 @@ import { Button, Form, Input, message } from "antd";
 import TagSelect from "./TagSelect";
 import TextEditor from "./TextEditor";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { createPost } from "../../api";
 import { useSelector } from "react-redux";
-import { userSelector } from "../../redux/userSlice";
+import { userSelector } from "../../redux/authSlice";
 import Forbidden from "../../components/Forbidden";
+import { createPost } from "../../api/postRequest";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onFinishFailed = (errorInfo: any) => {
@@ -19,8 +18,6 @@ const NewPost = () => {
 
 	const [content, setContent] = useState<string>("");
 	const [tags, setTags] = useState<string[]>([]);
-
-	const navigate = useNavigate();
 
 	if (!user || !user.user?.isAdmin) return <Forbidden />;
 

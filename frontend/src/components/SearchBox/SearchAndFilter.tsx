@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Select, Space, Tooltip } from "antd";
 import type { SelectProps } from "antd";
-import { getAllTags } from "../../api";
-import SearchInput from "./SearchInput";
 import { BiSearch, BiSolidHide } from "react-icons/bi";
+import SearchInput from "./SearchInput";
+import { getAllTags } from "../../api/tagRequest";
 
 interface ItemProps {
 	label: string;

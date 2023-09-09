@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import htmlParser, { HTMLReactParserOptions, Element } from "html-react-parser";
+import { Image, Spin, notification } from "antd";
+import { BsSendFill } from "react-icons/bs";
 import { Post } from "../../interface/Post";
-import { createComment, getComments, getPost } from "../../api";
 import { User } from "../../interface/User";
+import { CommentInterface } from "../../interface/Comments";
+import { createComment, getComments } from "../../api/commentRequest";
+import { getPost } from "../../api/postRequest";
 import RatingAndView from "../../components/RatingAndView";
 import DateAndGap from "../../components/DateAndGap";
 import TagList from "../../components/TagList";
-import htmlParser from "html-react-parser";
-import { HTMLReactParserOptions, Element } from "html-react-parser";
-import { Image, Spin, notification } from "antd";
-import CommentBox from "./CommentBox";
-import { BsSendFill } from "react-icons/bs";
-import { CommentInterface } from "../../interface/Comments";
-import Comment from "./Comment";
 import UserDisplay from "../../components/UserDisplay";
-import {} from "jodit-react";
+import CommentBox from "./CommentBox";
+import Comment from "./Comment";
 
 const imgClassName = "object-contain mx-auto rounded-md";
 const options: HTMLReactParserOptions = {

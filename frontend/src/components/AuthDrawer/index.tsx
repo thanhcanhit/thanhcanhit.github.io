@@ -1,9 +1,16 @@
 import { Dispatch, SetStateAction } from "react";
 import loginIllus from "./img/login_illustration.svg";
-import { login, register } from "../../api";
 import registerIllus from "./img/welcome_illustration.svg";
 import { Button, Form, Input, message, Drawer } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { login, register } from "../../api/authRequest";
+import { loginSelector, registerSelector } from "../../redux/authSlice";
+
+type valuesType = {
+	username: string;
+	password: string;
+	name?: string;
+};
 
 type AuthDrawerType = {
 	open: boolean;
@@ -14,70 +21,76 @@ type AuthDrawerType = {
 
 const AuthDrawer = ({ open, type, setOpen, setType }: AuthDrawerType) => {
 	const [messageApi, contextHolder] = message.useMessage();
+	const registerState = useSelector(registerSelector);
+	const loginState = useSelector(loginSelector);
 	const dispatch = useDispatch();
-	
+
 	const onClose = () => {
 		setOpen(false);
 	};
 
-	const onFinish = async (values: {
-		username: string;
-		password: string;
-		name?: string;
-	}) => {
-		if (type === "login") {
-			const isCompleted = await login(dispatch, {
+	// Message
+	const showSuccessMessage = (message: string) => {
+		messageApi.open({
+			type: "success",
+			content: message,
+		});
+	};
+
+	const showFailedMessage = (message: string) => {
+		messageApi.open({
+			type: "error",
+			content: message,
+		});
+	};
+
+	const showLoadingMessage = (message: string) => {
+		messageApi.open({
+			type: "loading",
+			content: message,
+		});
+	};
+
+	const handleLogin = async (values: valuesType) => {
+		if (loginState.isFetching) showLoadingMessage("Đang đăng nhập...");
+		const isCompleted = await login(
+			{
 				username: values.username,
 				password: values.password,
-			});
-			if (isCompleted) {
-				setOpen(false);
-				loginSuccess();
-			} else loginFailed();
-		} else {
-			if (!values.name) return;
+			},
+			dispatch
+		);
 
-			const isCompleted = await register({
+		// Show message
+		if (isCompleted) {
+			setOpen(false);
+			showSuccessMessage("Chào mừng bạn đã trở lại");
+		} else
+			showFailedMessage("Đăng nhập thất bại vui lòng kiểm tra lại thông tin");
+	};
+
+	const handleRegister = async (values: valuesType) => {
+		if (!values.name) return;
+
+		if (registerState.isFetching) showLoadingMessage("Đang đăng đăng ký...");
+		const isCompleted = await register(
+			{
 				username: values.username,
 				password: values.password,
 				name: values.name,
-			});
+			},
+			dispatch
+		);
 
-			if (isCompleted) {
-				setType("login");
-				registerComplete();
-			} else {
-				registerFailed();
-			}
-		}
-	};
-	// Message
-	const loginSuccess = () => {
-		messageApi.open({
-			type: "success",
-			content: "Đăng nhập thành công",
-		});
+		if (isCompleted) {
+			setType("login");
+			showSuccessMessage("Đăng ký tài khoản thành công!");
+		} else showFailedMessage("Có lỗi xảy ra: " + registerState.error);
 	};
 
-	const loginFailed = () => {
-		messageApi.open({
-			type: "error",
-			content: "Đăng nhập không thành công, vui lòng kiểm tra lại thông tin",
-		});
-	};
-
-	const registerComplete = () => {
-		messageApi.open({
-			type: "success",
-			content: "Đăng ký tài khoản thành công",
-		});
-	};
-
-	const registerFailed = () => {
-		messageApi.open({
-			type: "error",
-			content: "Đăng ký thất bại, tên tài khoản đã tồn tại",
-		});
+	const onFinish = (values: valuesType) => {
+		if (type === "login") handleLogin(values);
+		else handleRegister(values);
 	};
 
 	// Login Form
@@ -105,7 +118,9 @@ const AuthDrawer = ({ open, type, setOpen, setType }: AuthDrawerType) => {
 						labelCol={{ span: 8 }}
 						wrapperCol={{ span: 16 }}
 						onFinish={onFinish}
-						onFinishFailed={onFinishFailed}
+						onFinishFailed={() =>
+							showFailedMessage("Vui lòng điền đầy đủ thông tin")
+						}
 						autoComplete="off"
 						key="login"
 					>

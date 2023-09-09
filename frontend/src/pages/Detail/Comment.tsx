@@ -4,7 +4,7 @@ import DateDisplay from "../../components/Date";
 import { useState } from "react";
 import { User } from "../../interface/User";
 import { useEffect } from "react";
-import { getUser } from "../../api";
+import { getUser } from "../../api/userRequest";
 import UserDisplay from "../../components/UserDisplay";
 
 const animalsName = [

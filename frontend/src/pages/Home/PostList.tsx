@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Post } from "../../interface/Post";
 
-import { getPostsWithQuery, getTotalItems } from "../../api/index.js";
 import PostCard from "../../components/PostCard/index.js";
 import { Pagination, Skeleton, Spin } from "antd";
+import { getPostsWithQuery, getTotalItems } from "../../api/postRequest.js";
 
 const skeletonWhenLoading = (
 	<>

@@ -1,11 +1,11 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import { useDispatch, useSelector } from "react-redux";
-import { userSelector } from "../../redux/userSlice";
+import { userSelector } from "../../redux/authSlice";
 import type { MenuProps } from "antd";
 import { Button, Dropdown } from "antd";
 import { Link } from "react-router-dom";
-import { logout } from "../../api";
 import UserAvatar from "../UserAvatar";
+import { logout } from "../../api/authRequest";
 
 const adminItems: MenuProps["items"] = [
 	{
@@ -20,7 +20,7 @@ const adminItems: MenuProps["items"] = [
 
 const Account = () => {
 	const user = useSelector(userSelector);
-	const userData = user.user;
+	const userData = user;
 	const dispatch = useDispatch();
 
 	if (!userData) return <></>;
