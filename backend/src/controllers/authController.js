@@ -46,10 +46,11 @@ class AuthController {
 		}
 	}
 
-	// [POST] /auth/refreshToken
+	// [GET] /auth/refreshToken
 	async refresh(req, res, next) {
 		try {
 			const refreshToken = req.cookies?.REFRESH_TOKEN;
+			console.log("refresh token", refreshToken);
 			if (!refreshToken) return res.sendStatus(401);
 
 			const decode = jwt.verify(refreshToken, process.env.REFRESH_KEY);
@@ -60,6 +61,7 @@ class AuthController {
 			const newAccessToken = createAccessToken({ ...payload });
 			const newRefreshToken = createRefreshToken({ ...payload });
 
+			console.log(newAccessToken);
 			res.cookie("REFRESH_TOKEN", newRefreshToken, {
 				httpOnly: true,
 				secure: false,
