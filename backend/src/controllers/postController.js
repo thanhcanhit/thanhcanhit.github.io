@@ -97,10 +97,11 @@ class PostController {
 				...reqData,
 			});
 			await post.save();
+			const userArticleCount = await Post.find({ user_id: user_id }).count();
 			if (user_id) {
 				await User.findOneAndUpdate(
 					{ _id: user_id },
-					{ $inc: { numPost: 1 } }
+					{ $set: { numPost: userArticleCount } }
 				);
 			}
 

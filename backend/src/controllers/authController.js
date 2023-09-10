@@ -23,6 +23,8 @@ class AuthController {
 
 			const isCorrectPassword = await compare(password, user.password);
 
+			res.set("Access-Control-Allow-Credentials", true);
+
 			if (!isCorrectPassword) {
 				return res.status(401).json({ message: "Password is not correct" });
 			} else {
@@ -31,9 +33,10 @@ class AuthController {
 				const refreshToken = createRefreshToken(payload);
 
 				res.cookie("REFRESH_TOKEN", refreshToken, {
+					expires: new Date(Date.now() + 3600 * 1000 * 24 * 180 * 1),
+					sameSite: "none",
 					httpOnly: true,
-					secure: false,
-					sameSite: true,
+					secure: true,
 				});
 
 				res.json({
@@ -50,7 +53,6 @@ class AuthController {
 	async refresh(req, res, next) {
 		try {
 			const refreshToken = req.cookies?.REFRESH_TOKEN;
-			console.log("refresh token", refreshToken);
 			if (!refreshToken) return res.sendStatus(401);
 
 			const decode = jwt.verify(refreshToken, process.env.REFRESH_KEY);
@@ -61,11 +63,13 @@ class AuthController {
 			const newAccessToken = createAccessToken({ ...payload });
 			const newRefreshToken = createRefreshToken({ ...payload });
 
-			console.log(newAccessToken);
+			res.set("Access-Control-Allow-Credentials", true);
+
 			res.cookie("REFRESH_TOKEN", newRefreshToken, {
+				expires: new Date(Date.now() + 3600 * 1000 * 24 * 180 * 1),
+				sameSite: "none",
 				httpOnly: true,
-				secure: false,
-				sameSite: true,
+				secure: true,
 			});
 
 			return res.json({

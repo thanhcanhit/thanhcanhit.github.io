@@ -21,9 +21,9 @@ const port = process.env.PORT || 4000;
 const app = express();
 
 // Middleware
-app.use(morgan("dev"));
-app.use(cors());
 app.use(cookieParser());
+app.use(cors({ credentials: true, origin: ["http://127.0.0.1:5173", "http://thanhcanhit.id.vn"] }));
+app.use(morgan("common"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
