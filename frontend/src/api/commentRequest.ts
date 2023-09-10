@@ -1,5 +1,5 @@
 import { CommentInterface } from "../interface/Comments";
-import { axiosIntance as axios } from "./apiConstants";
+import { axiosIntance as axios } from ".";
 
 const getComments = async (postId: string) => {
 	try {

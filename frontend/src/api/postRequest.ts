@@ -1,5 +1,6 @@
 import { Post } from "../interface/Post";
-import { axiosIntance as axios } from "./apiConstants";
+import { axiosIntance as axios } from ".";
+import { AxiosInstance } from "axios";
 
 const getPosts = async () => {
 	try {
@@ -27,15 +28,18 @@ const getPostsWithQuery = async (limit: number, offset: number) => {
 	}
 };
 
-const createPost = async (data: Partial<Post>) => {
-	// const token = store.getState().user.user?.accessToken;
+const createPost = async (
+	data: Partial<Post>,
+	token: string,
+	axiosJWT: AxiosInstance
+) => {
 	try {
-		const res = await axios.post(
+		const res = await axiosJWT.post(
 			`/post`,
 			{
 				...data,
-			}
-			// { headers: { authorization: `Beaer ${token}` } }
+			},
+			{ headers: { authorization: `Beaer ${token}` } }
 		);
 
 		return Boolean(!res.data.err);

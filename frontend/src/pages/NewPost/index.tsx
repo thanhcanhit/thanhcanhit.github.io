@@ -2,10 +2,15 @@ import { Button, Form, Input, message } from "antd";
 import TagSelect from "./TagSelect";
 import TextEditor from "./TextEditor";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { userSelector } from "../../redux/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { loginSuccess, userSelector } from "../../redux/authSlice";
 import Forbidden from "../../components/Forbidden";
 import { createPost } from "../../api/postRequest";
+import axios, { InternalAxiosRequestConfig } from "axios";
+import jwtDecode from "jwt-decode";
+import { refreshToken } from "../../api/authRequest";
+import { User } from "../../interface/User";
+import { API_URL } from "../../api";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onFinishFailed = (errorInfo: any) => {
@@ -15,11 +20,34 @@ const onFinishFailed = (errorInfo: any) => {
 const NewPost = () => {
 	const [messageApi, contextHolder] = message.useMessage();
 	const user = useSelector(userSelector);
+	const dispatch = useDispatch();
 
 	const [content, setContent] = useState<string>("");
 	const [tags, setTags] = useState<string[]>([]);
 
-	if (!user || !user.user?.isAdmin) return <Forbidden />;
+	if (!user || !user.isAdmin) return <Forbidden />;
+
+	// Create axios instance with check token expired when send request
+	const axiosJWT = axios.create({ baseURL: API_URL });
+	axiosJWT.interceptors.request.use(
+		async (config: InternalAxiosRequestConfig) => {
+			const decodedToken: { exp: number } = jwtDecode(user.accessToken);
+
+			if (decodedToken.exp < new Date().getTime() / 1000) {
+				const response = await refreshToken();
+				const newAccessToken = response.data.accessToken;
+				const refreshUser: User = {
+					...user,
+					accessToken: newAccessToken,
+				};
+
+				// Update redux store & override headers
+				dispatch(loginSuccess(refreshUser));
+				config.headers["authorization"] = `Bearer ${newAccessToken}`;
+			}
+			return config;
+		}
+	);
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const onFinish = async (values: any) => {
@@ -27,24 +55,26 @@ const NewPost = () => {
 			...values,
 			content,
 			tags,
-			user_id: "64ead7f05ad00ed80d21ca32",
+			user_id: user._id,
 		};
+
+		// Remove empty fields
 		Object.keys(newPost).forEach((key) => {
 			if (!newPost[key]) {
 				delete newPost[key];
 			}
 		});
+
+		// Try create new post
 		try {
-			const isCompleted = await createPost(newPost);
-			console.log(isCompleted);
+			const isCompleted = await createPost(newPost, user.accessToken, axiosJWT);
 			if (isCompleted) {
-				messageApi.open({
-					type: "success",
-					content: "Đăng tải bài viết thành công",
-				});
+				messageApi.success("Đăng tải bài viết thành công");
+			} else {
+				messageApi.error("Đăng tải bài viết thất bại");
 			}
 		} catch (err) {
-			console.log("Can't create");
+			messageApi.success("Có lỗi xảy ra");
 		}
 	};
 

@@ -21,10 +21,10 @@ const CommentBox = ({ onSubmit }: CommentBoxType) => {
 
 	const handleSubmit = async () => {
 		let nameSubmit: string | null;
-		if (user.user) nameSubmit = user.user?.name;
+		if (user) nameSubmit = user.name;
 		else nameSubmit = name ? name : null;
 
-		onSubmit(nameSubmit, user.user?._id || null, content, rating);
+		onSubmit(nameSubmit, user?._id || null, content, rating);
 		setName("");
 		setContent("");
 		setRating(5);
@@ -39,7 +39,7 @@ const CommentBox = ({ onSubmit }: CommentBoxType) => {
 				value={rating}
 				onChange={(value) => setRating(value)}
 			/>
-			{!user.user && (
+			{!user && (
 				<Input
 					showCount
 					value={name}

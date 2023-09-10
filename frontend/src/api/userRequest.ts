@@ -1,4 +1,4 @@
-import { axiosIntance as axios } from "./apiConstants";
+import { axiosIntance as axios } from ".";
 
 const getUser = async (userId: string) => {
 	try {

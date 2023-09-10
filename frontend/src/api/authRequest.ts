@@ -1,5 +1,5 @@
 import { Dispatch } from "@reduxjs/toolkit";
-import { axiosIntance as axios } from "./apiConstants";
+import { axiosIntance as axios } from ".";
 import {
 	loginStarted,
 	loginSuccess,
@@ -20,10 +20,14 @@ async function login(
 			`/auth/login`,
 			{ ...data },
 			{
+				headers: {
+					"Access-Control-Allow-Origin": true,
+					"Access-Control-Allow-Credentials": true,
+				},
 				withCredentials: true,
 			}
 		);
-		dispatch(loginSuccess(res.data.data));
+		dispatch(loginSuccess({ ...res.data.data }));
 		return true;
 	} catch (err) {
 		dispatch(loginFailed("Can't login"));
@@ -54,6 +58,10 @@ async function register(
 async function refreshToken() {
 	try {
 		const res = await axios.get(`/auth/refresh`, {
+			headers: {
+				"Access-Control-Allow-Origin": true,
+				"Access-Control-Allow-Credentials": true,
+			},
 			withCredentials: true,
 		});
 

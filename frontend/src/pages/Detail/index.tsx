@@ -72,7 +72,6 @@ const Detail = () => {
 	useEffect(() => {
 		const getData = async () => {
 			const res = await getPost(String(id));
-			console.log(res.data);
 			setPost(res.data.post);
 			setAuthor(res.data.user);
 		};
