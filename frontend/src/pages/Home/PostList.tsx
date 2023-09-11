@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Post } from "../../interface/Post";
 
 import PostCard from "../../components/PostCard/index.js";
-import { Pagination, Skeleton, Spin } from "antd";
+import { Pagination, Skeleton } from "antd";
 import { getPostsWithQuery, getTotalItems } from "../../api/postRequest.js";
 
 const skeletonWhenLoading = (
@@ -20,6 +20,7 @@ const PostList = () => {
 	const [totalItems, setTotalItems] = useState<number>(0);
 	const limit = 6;
 
+	const postListRef = useRef<HTMLDivElement>(null);
 	const [posts, setPosts] = useState<Post[]>([]);
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const offset: number = (currentPage - 1) * limit;
@@ -42,13 +43,25 @@ const PostList = () => {
 		getData();
 	}, [offset]);
 
+	function scrollIntoPostList() {
+		setTimeout(() => {
+			postListRef.current?.scrollIntoView({
+				behavior: "smooth",
+				block: "start",
+			});
+		}, 250);
+	}
+
 	const postsRendered = posts.map((item) => (
 		<PostCard post={item} key={item._id} />
 	));
 
 	return (
 		<div className="pb-12">
-			<div className="container grid grid-cols-2 gap-3 py-8 gap-y-6 md:grid-cols-2 lg:grid-cols-3">
+			<div
+				ref={postListRef}
+				className="container grid grid-cols-2 gap-3 py-8 gap-y-6 md:grid-cols-2 lg:grid-cols-3 scroll-mt-2"
+			>
 				{posts.length > 0 ? postsRendered : skeletonWhenLoading}
 			</div>
 			<div className="container flex justify-center">
@@ -58,7 +71,10 @@ const PostList = () => {
 						responsive
 						defaultCurrent={currentPage}
 						defaultPageSize={limit}
-						onChange={(page) => setCurrentPage(page)}
+						onChange={(page) => {
+							scrollIntoPostList();
+							setCurrentPage(page);
+						}}
 						total={totalItems}
 					/>
 				</div>

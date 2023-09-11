@@ -57,4 +57,23 @@ const getTotalItems = async () => {
 	}
 };
 
-export { createPost, getPost, getPosts, getPostsWithQuery, getTotalItems };
+const searchPost = async (title: string, tags: string[]) => {
+	try {
+		const temp = [["title", title]];
+		if (tags.length > 0) temp.push(["tags", tags.toString()]);
+		const queryString = new URLSearchParams(temp).toString();
+		const res = await axios.get(`/post/search?${queryString}`);
+		return res.data;
+	} catch (err) {
+		return null;
+	}
+};
+
+export {
+	createPost,
+	getPost,
+	getPosts,
+	getPostsWithQuery,
+	getTotalItems,
+	searchPost,
+};

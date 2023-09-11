@@ -1,51 +1,29 @@
-import { useState } from "react";
+import { useState, useLayoutEffect } from "react";
 import { AutoComplete, Input } from "antd";
 import type { SelectProps } from "antd/es/select";
-
-const getRandomInt = (max: number, min = 0) =>
-	Math.floor(Math.random() * (max - min + 1)) + min;
-
-const searchResult = (query: string) =>
-	new Array(getRandomInt(5))
-		.join(".")
-		.split(".")
-		.map((_, idx) => {
-			const category = `${query}${idx}`;
-			return {
-				value: category,
-				label: (
-					<div
-						style={{
-							display: "flex",
-							justifyContent: "space-between",
-						}}
-					>
-						<span>
-							Found {query} on{" "}
-							<a
-								href={`https://s.taobao.com/search?q=${query}`}
-								target="_blank"
-								rel="noopener noreferrer"
-							>
-								{category}
-							</a>
-						</span>
-						<span>{getRandomInt(200, 100)} results</span>
-					</div>
-				),
-			};
-		});
+import { useDispatch, useSelector } from "react-redux";
+import {
+	searchTagsSelector,
+	searchTextSelector,
+	setSearchTags,
+	setSearchText,
+} from "./searchSlice";
+import { searchPost } from "../../api/postRequest";
+import { Post } from "../../interface/Post";
+import { Link } from "react-router-dom";
 
 const SearchInput = () => {
 	const [options, setOptions] = useState<SelectProps<object>["options"]>([]);
-	const [input, setInput] = useState<string>("");
+	const input = useSelector(searchTextSelector);
+	const tags = useSelector(searchTagsSelector);
+	const dispatch = useDispatch();
 
 	const handleSearch = (value: string) => {
-		setOptions(value ? searchResult(value) : []);
+		setOptions(value ? options : []);
 	};
 
-	const onSelect = (value: string) => {
-		setInput(value);
+	const setInput = (text: string) => {
+		dispatch(setSearchText(text));
 	};
 
 	const onChange = (event: React.FormEvent<HTMLInputElement>) => {
@@ -53,12 +31,60 @@ const SearchInput = () => {
 		setInput(value);
 	};
 
+	useLayoutEffect(() => {
+		const getSearchResult = async () => {
+			const response = await searchPost(input, tags);
+			const responseData: Post[] = response.data;
+
+			const first5Pieces = responseData.filter((_i, index) => index < 5);
+
+			let resultData = first5Pieces.map((item: Post) => {
+				return {
+					value: item.title,
+					label: (
+						<div
+							style={{
+								display: "flex",
+								justifyContent: "space-between",
+							}}
+						>
+							<Link
+								to={`post/${item._id}`}
+								onClick={() => {
+									setInput("");
+									dispatch(setSearchTags([]));
+								}}
+							>
+								<span>
+									Found {input} on {item.title}
+								</span>
+							</Link>
+						</div>
+					),
+				};
+			});
+
+			if (responseData.length > 4)
+				resultData = [
+					...resultData,
+					{
+						value: "",
+						label: (
+							<Link to={"/search"}>
+								Xem toàn bộ {responseData.length} kết quả
+							</Link>
+						),
+					},
+				];
+
+			setOptions(resultData);
+		};
+
+		getSearchResult();
+	}, [input, tags]);
+
 	return (
-		<AutoComplete
-			options={options}
-			onSelect={onSelect}
-			onSearch={handleSearch}
-		>
+		<AutoComplete options={options} onSearch={handleSearch}>
 			<Input.Search
 				size="middle"
 				value={input}

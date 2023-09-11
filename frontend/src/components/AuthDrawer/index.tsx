@@ -1,7 +1,7 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import loginIllus from "./img/login_illustration.svg";
 import registerIllus from "./img/welcome_illustration.svg";
-import { Button, Form, Input, message, Drawer } from "antd";
+import { Button, Form, Input, message, Drawer, Checkbox } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { login, register } from "../../api/authRequest";
 import { loginSelector, registerSelector } from "../../redux/authSlice";
@@ -88,18 +88,16 @@ const AuthDrawer = ({ open, type, setOpen, setType }: AuthDrawerType) => {
 		} else showFailedMessage("Có lỗi xảy ra: " + registerState.error);
 	};
 
+	// Login Form on submit
 	const onFinish = (values: valuesType) => {
 		if (type === "login") handleLogin(values);
 		else handleRegister(values);
 	};
 
-	// Login Form
 	const onFinishFailed = () => {
-		messageApi.open({
-			type: "error",
-			content: "Vui lòng điền đầy đủ thông tin",
-		});
+		showFailedMessage("Vui lòng điền đầy đủ thông tin");
 	};
+
 	return (
 		<>
 			{contextHolder}
