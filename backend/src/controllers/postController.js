@@ -72,15 +72,25 @@ class PostController {
 	async search(req, res, next) {
 		try {
 			let { title, tags } = req.query;
-			tags = tags.split(",");
-			const titlePattern = new RegExp(`^${title}`, "i");
+			tags = tags?.split(",");
 
-			const posts = await Post.find({
-				tags: { $all: tags },
-				title: { $regex: titlePattern },
-			}).sort({ createdAt: -1 });
+			const titlePattern = title
+				? new RegExp(`^${title}`, "i")
+				: new RegExp("^.", "i");
 
-			res.json({ message: "Completed", data: { title, tags, posts } });
+			if (!tags) {
+				const posts = await Post.find({
+					title: { $regex: titlePattern },
+				}).sort({ createdAt: -1 });
+				return res.json({ message: "Completed", data: posts });
+			} else {
+				const posts = await Post.find({
+					tags: { $all: tags },
+					title: { $regex: titlePattern },
+				}).sort({ createdAt: -1 });
+
+				return res.json({ message: "Completed", data: posts });
+			}
 		} catch (err) {
 			next(err);
 		}
