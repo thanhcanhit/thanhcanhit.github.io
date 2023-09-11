@@ -18,10 +18,7 @@ const ToggleThemeButton = () => {
 						className="text-yellow animate-wiggle"
 					/>
 				) : (
-					<HiSun
-						fontSize={28}
-						className="text-yellow animate-spinSlow"
-					/>
+					<HiSun fontSize={28} className="text-yellow animate-spinSlow" />
 				)}
 			</button>
 		</div>

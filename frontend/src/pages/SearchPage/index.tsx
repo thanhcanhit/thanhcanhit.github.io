@@ -30,17 +30,24 @@ const SearchPage = () => {
 		return <PostCard post={post} key={post._id} />;
 	});
 
+	useEffect(() => {
+		window.scrollTo(0, 0);
+	}, []);
+
 	return (
 		<div className="container">
 			<div className="flex flex-col items-center justify-center gap-4 pt-4 md:gap-20 md:flex-row">
 				<img src={searchImg} className="w-[200px] md:w-[250px]" />
-				<h1 className="text-xl font-semibold md:text-3xl text-normal">
-					Có {posts?.length} kết quả tìm kiếm cho:
+				<div className="text-xl font-semibold md:text-3xl text-normal">
+					<h1>Có {posts?.length} kết quả tìm kiếm cho:</h1>
 					<span className="block my-2 text-xl">
 						Tiêu đề: {input ? input : "Bất kỳ"}
 					</span>
-					<TagList tags={tags} />
-				</h1>
+					<div className="flex gap-2">
+						<span className="text-xl">Chủ đề:</span>
+						<TagList tags={tags} />
+					</div>
+				</div>
 			</div>
 			<SearchBox open />
 			{/* Post rendered */}
@@ -50,7 +57,10 @@ const SearchPage = () => {
 				</div>
 			) : (
 				<div className="flex justify-center mt-8">
-					<Empty className="p-4 mx-auto bg-white rounded-md" />
+					<Empty
+						className="p-4 mx-auto bg-white rounded-md"
+						description="Không có bài viết nào phù hợp"
+					/>
 				</div>
 			)}
 		</div>

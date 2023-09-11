@@ -22,13 +22,9 @@ const SearchInput = () => {
 		setOptions(value ? options : []);
 	};
 
-	const setInput = (text: string) => {
-		dispatch(setSearchText(text));
-	};
-
 	const onChange = (event: React.FormEvent<HTMLInputElement>) => {
 		const value: string = event.currentTarget.value;
-		setInput(value);
+		dispatch(setSearchText(value));
 	};
 
 	useLayoutEffect(() => {
@@ -49,9 +45,9 @@ const SearchInput = () => {
 							}}
 						>
 							<Link
-								to={`post/${item._id}`}
+								to={`/post/${item._id}`}
 								onClick={() => {
-									setInput("");
+									dispatch(setSearchText(""));
 									dispatch(setSearchTags([]));
 								}}
 							>
@@ -81,7 +77,16 @@ const SearchInput = () => {
 		};
 
 		getSearchResult();
-	}, [input, tags]);
+
+		const scrollToTop = () => {
+			window.scrollTo({ behavior: "smooth", top: 0 });
+		};
+		const to = setTimeout(scrollToTop, 150);
+
+		return () => {
+			clearTimeout(to);
+		};
+	}, [dispatch, input, tags]);
 
 	return (
 		<AutoComplete options={options} onSearch={handleSearch}>
