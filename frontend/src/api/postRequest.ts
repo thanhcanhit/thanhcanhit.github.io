@@ -11,6 +11,21 @@ const getPosts = async () => {
 	}
 };
 
+const getPostsOfUser = async (
+	userId: string,
+	token: string,
+	axiosJWT: AxiosInstance
+) => {
+	try {
+		const res = await axiosJWT.get(`me/posts?user_id=${userId}`, {
+			headers: { authorization: `Beaer ${token}` },
+		});
+		return res.data;
+	} catch (err) {
+		return null;
+	}
+};
+
 const getPost = async (id: string) => {
 	try {
 		const res = await axios.get(`/post/${id}`);
@@ -19,6 +34,7 @@ const getPost = async (id: string) => {
 		return null;
 	}
 };
+
 const getPostsWithQuery = async (limit: number, offset: number) => {
 	try {
 		const res = await axios.get(`/post?limit=${limit}&offset=${offset}`);
@@ -41,6 +57,42 @@ const createPost = async (
 			},
 			{ headers: { authorization: `Beaer ${token}` } }
 		);
+
+		return Boolean(!res.data.err);
+	} catch (err) {
+		return false;
+	}
+};
+
+const updatePost = async (
+	data: Partial<Post>,
+	token: string,
+	axiosJWT: AxiosInstance
+) => {
+	try {
+		const res = await axiosJWT.put(
+			`/post/${data._id}`,
+			{
+				...data,
+			},
+			{ headers: { authorization: `Beaer ${token}` } }
+		);
+
+		return Boolean(!res.data.err);
+	} catch (err) {
+		return false;
+	}
+};
+
+const deletePost = async (
+	post_id: string,
+	token: string,
+	axiosJWT: AxiosInstance
+) => {
+	try {
+		const res = await axiosJWT.delete(`/post/${post_id}`, {
+			headers: { authorization: `Beaer ${token}` },
+		});
 
 		return Boolean(!res.data.err);
 	} catch (err) {
@@ -76,4 +128,7 @@ export {
 	getPostsWithQuery,
 	getTotalItems,
 	searchPost,
+	getPostsOfUser,
+	deletePost,
+	updatePost,
 };

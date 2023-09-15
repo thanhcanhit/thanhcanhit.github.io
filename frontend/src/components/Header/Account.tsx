@@ -10,7 +10,7 @@ import { logout } from "../../api/authRequest";
 const adminItems: MenuProps["items"] = [
 	{
 		key: "1",
-		label: <Link to="/new-post">Tạo bài viết mới</Link>,
+		label: <Link to="/me/new-post">Tạo bài viết mới</Link>,
 	},
 	{
 		key: "2",

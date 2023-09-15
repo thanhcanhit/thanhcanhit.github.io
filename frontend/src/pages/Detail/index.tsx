@@ -15,13 +15,13 @@ import UserDisplay from "../../components/UserDisplay";
 import CommentBox from "./CommentBox";
 import Comment from "./Comment";
 
-const imgClassName = "object-contain mx-auto rounded-md";
+const imgClassName = "object-contain w-fit mx-auto rounded-md";
 const options: HTMLReactParserOptions = {
 	replace: (domNode) => {
 		if (domNode instanceof Element && domNode.attribs.src) {
 			return (
-				<div className="flex justify-center">
-					<Image className={imgClassName} src={domNode.attribs.src} />
+				<div className="grid items-center">
+					<Image className={imgClassName} src={domNode.attribs.src} />;
 				</div>
 			);
 		}
@@ -114,9 +114,11 @@ const Detail = () => {
 								className={imgClassName + " max-h-[60vh]"}
 							/>
 						</div>
-						<div className="max-w-full mt-4 jodic-render">
-							{htmlParser(post.content, options)}
-						</div>
+						<Image.PreviewGroup>
+							<div className="max-w-full mt-4 jodic-render">
+								{htmlParser(post.content, options)}
+							</div>
+						</Image.PreviewGroup>
 					</div>
 				</div>
 

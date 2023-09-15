@@ -2,15 +2,34 @@ import { message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { userSelector } from "../../redux/authSlice";
 import Forbidden from "../../components/Forbidden";
-import { createPost } from "../../api/postRequest";
+import { getPost, updatePost } from "../../api/postRequest";
 import { createAxiosJWT } from "../../api";
 import PostEditor from "../../components/PostEditor";
+import { Post } from "../../interface/Post";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import NotFound from "../../components/NotFound";
 
-const NewPost = () => {
+const UpdatePost = () => {
 	const [messageApi, contextHolder] = message.useMessage();
+
+	const { postId } = useParams();
 	const user = useSelector(userSelector);
 	const dispatch = useDispatch();
+	const [post, setPost] = useState<Post>();
 
+	useEffect(() => {
+		const getCurrentPost = async () => {
+			const response = await getPost(postId || "");
+
+			if (response) setPost(response.data.post);
+		};
+
+		getCurrentPost();
+	}, [postId]);
+
+	// Conditional rendering
+	if (!post) return <NotFound />;
 	if (!user || !user.isAdmin) return <Forbidden />;
 
 	const axiosJWT = createAxiosJWT(user, dispatch);
@@ -18,6 +37,7 @@ const NewPost = () => {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const onFinish = async (values: any, content: string, tags: string[]) => {
 		const newPost = {
+			_id: postId,
 			...values,
 			content,
 			tags,
@@ -33,11 +53,11 @@ const NewPost = () => {
 
 		// Try create new post
 		try {
-			const isCompleted = await createPost(newPost, user.accessToken, axiosJWT);
+			const isCompleted = await updatePost(newPost, user.accessToken, axiosJWT);
 			if (isCompleted) {
-				messageApi.success("Đăng tải bài viết thành công");
+				messageApi.success("Cập nhật bài viết thành công");
 			} else {
-				messageApi.error("Đăng tải bài viết thất bại");
+				messageApi.error("Cập nhật bài viết thất bại");
 			}
 		} catch (err) {
 			messageApi.success("Có lỗi xảy ra");
@@ -47,9 +67,9 @@ const NewPost = () => {
 	return (
 		<>
 			{contextHolder}
-			<PostEditor onFinish={onFinish} />
+			<PostEditor onFinish={onFinish} post={post} />
 		</>
 	);
 };
 
-export default NewPost;
+export default UpdatePost;

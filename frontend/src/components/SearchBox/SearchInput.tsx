@@ -77,15 +77,6 @@ const SearchInput = () => {
 		};
 
 		getSearchResult();
-
-		const scrollToTop = () => {
-			window.scrollTo({ behavior: "smooth", top: 0 });
-		};
-		const to = setTimeout(scrollToTop, 150);
-
-		return () => {
-			clearTimeout(to);
-		};
 	}, [dispatch, input, tags]);
 
 	return (
