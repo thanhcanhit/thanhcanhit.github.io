@@ -4,8 +4,10 @@ import postRoute from "./postRoute.js";
 import commentRoute from "./commentRoute.js";
 import tagRoute from "./tagRoute.js";
 import authRoute from "./authRoute.js";
+import meRoute from "./meRoute.js";
 
 const declareEndpoint = (app) => {
+	app.use("/me", meRoute);
 	app.use("/user", userRoute);
 	app.use("/post", postRoute);
 	app.use("/comment", commentRoute);

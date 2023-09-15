@@ -96,7 +96,7 @@ class PostController {
 		}
 	}
 
-	// [POST] /user
+	// [POST] /post
 	async create(req, res, next) {
 		try {
 			const reqData = req.body;
@@ -116,6 +116,44 @@ class PostController {
 			}
 
 			res.json(post);
+		} catch (err) {
+			next(err);
+		}
+	}
+
+	// [POST] /post/:postId
+	async delete(req, res, next) {
+		try {
+			const { post_id } = req.params;
+
+			const post = await Post.findOne({ _id: post_id });
+			const user_id = post.user_id;
+			// Update new article count for this user
+			const userArticleCount = await Post.find({ user_id: user_id }).count();
+			if (user_id) {
+				await User.findOneAndUpdate(
+					{ _id: user_id },
+					{ $set: { numPost: userArticleCount } }
+				);
+			}
+
+			await Post.findByIdAndDelete(post_id);
+
+			res.json({ message: "Complete" });
+		} catch (err) {
+			next(err);
+		}
+	}
+
+	// [PUT] /post/:postId
+	async put(req, res, next) {
+		try {
+			const { post_id } = req.params;
+			const updatedPost = req.body;
+
+			await Post.findOneAndUpdate({ _id: post_id }, { $set: updatedPost });
+
+			res.json({ message: "Complete" });
 		} catch (err) {
 			next(err);
 		}

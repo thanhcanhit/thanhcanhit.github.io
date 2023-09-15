@@ -13,7 +13,6 @@ const middlewareController = {
 				if (!decode) return res.status(401).json({ err: "Invalid token" });
 				req.decodeData = decode;
 				next();
-				console.log("passed");
 			} catch (invalidTokenErr) {
 				res.status(403).json({ err: "Invalid token" });
 			}
@@ -23,10 +22,10 @@ const middlewareController = {
 	},
 	verifyAndAdmin: (req, res, next) => {
 		middlewareController.verifyToken(req, res, () => {
-			if (!req.decodeData.isAdmin) {
-				return res.status(403).json({ err: "Not admin" });
+			if (req.decodeData.isAdmin || req.decodeData._id === req.query.user_id) {
+				return next();
 			}
-			next();
+			return res.status(403).json({ err: "Not admin" });
 		});
 	},
 };
