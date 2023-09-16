@@ -27,7 +27,6 @@ const createAxiosJWT = (user: User, dispatch: Dispatch): AxiosInstance => {
 				// Update redux store & override headers
 				dispatch(loginSuccess(refreshUser));
 				config.headers["authorization"] = `Bearer ${newAccessToken}`;
-				console.log(config.headers)
 			}
 			return config;
 		}

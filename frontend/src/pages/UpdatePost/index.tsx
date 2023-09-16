@@ -1,4 +1,4 @@
-import { message } from "antd";
+import { Spin, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { userSelector } from "../../redux/authSlice";
 import Forbidden from "../../components/Forbidden";
@@ -8,7 +8,6 @@ import PostEditor from "../../components/PostEditor";
 import { Post } from "../../interface/Post";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import NotFound from "../../components/NotFound";
 
 const UpdatePost = () => {
 	const [messageApi, contextHolder] = message.useMessage();
@@ -29,7 +28,7 @@ const UpdatePost = () => {
 	}, [postId]);
 
 	// Conditional rendering
-	if (!post) return <NotFound />;
+	if (!post) return <div className="grid items-center pt-4"><Spin/></div>;
 	if (!user || !user.isAdmin) return <Forbidden />;
 
 	const axiosJWT = createAxiosJWT(user, dispatch);

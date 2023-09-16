@@ -67,4 +67,10 @@
 	.jodic-render a{
 		@apply font-medium text-blue-600 transition-all dark:text-blue-500 hover:brightness-150 hover:underline;
 	}
+	.jodic-render strong{
+		@apply block my-1 indent-0;
+	}
+	.jodic-render p{
+		@apply block text-justify indent-6;
+	}
 }

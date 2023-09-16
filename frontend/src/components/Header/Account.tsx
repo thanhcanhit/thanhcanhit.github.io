@@ -16,6 +16,10 @@ const adminItems: MenuProps["items"] = [
 		key: "2",
 		label: <Link to="/me/posts">Quản lí bài viết</Link>,
 	},
+	{
+		key: "3",
+		label: <Link to="/me/posts/deleted">Bài viết đã xóa</Link>,
+	},
 ];
 
 const Account = () => {

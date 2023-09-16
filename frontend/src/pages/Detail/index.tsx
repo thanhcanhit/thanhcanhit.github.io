@@ -15,13 +15,13 @@ import UserDisplay from "../../components/UserDisplay";
 import CommentBox from "./CommentBox";
 import Comment from "./Comment";
 
-const imgClassName = "object-contain w-fit mx-auto rounded-md";
+const imgClassName = "block object-contain w-fit mx-auto rounded-md";
 const options: HTMLReactParserOptions = {
 	replace: (domNode) => {
 		if (domNode instanceof Element && domNode.attribs.src) {
 			return (
-				<div className="grid items-center">
-					<Image className={imgClassName} src={domNode.attribs.src} />;
+				<div className="grid items-center mx-auto border w-fit">
+					<Image className={imgClassName} src={domNode.attribs.src} />
 				</div>
 			);
 		}
@@ -108,11 +108,10 @@ const Detail = () => {
 						<h1 className="pb-4 text-4xl font-semibold text-center">
 							{post.title}
 						</h1>
-						<div className="flex justify-center w-full mb-2 ">
-							<Image
-								src={post.img_path}
-								className={imgClassName + " max-h-[60vh]"}
-							/>
+						<div className="flex flex-col gap-1 my-2 text-lg" key={seed}>
+							{author && <UserDisplay user={author} />}
+							<DateAndGap date={post.createdAt} hasTime />
+							<RatingAndView post={post} />
 						</div>
 						<Image.PreviewGroup>
 							<div className="max-w-full mt-4 jodic-render">
@@ -127,11 +126,13 @@ const Detail = () => {
 					<div className="w-full p-4 mb-4 bg-white rounded-lg shadow-sm border-normal dark:bg-gray-800">
 						{/* Detail and link */}
 						<div>
-							<div className="flex flex-col gap-1 my-2 text-lg" key={seed}>
-								{author && <UserDisplay user={author} />}
-								<DateAndGap date={post.createdAt} hasTime />
-								<RatingAndView post={post} />
+							<div className="flex justify-center w-full mb-2 ">
+								<Image
+									src={post.img_path}
+									className={imgClassName + " max-h-[200px]"}
+								/>
 							</div>
+
 							<p className="my-2 italic">{post.shortDesc}</p>
 							<TagList tags={post.tags} />
 						</div>
@@ -141,7 +142,7 @@ const Detail = () => {
 								className="w-full button-primary"
 								disabled={!post.procLink}
 							>
-								Tới trang sản phẩm
+								Sản phẩm
 							</button>
 						</a>
 						<a href={post.sourceLink} target="_blank">
@@ -149,7 +150,7 @@ const Detail = () => {
 								className="w-full button-primary"
 								disabled={!post.sourceLink}
 							>
-								Tới trang source code
+								Source code
 							</button>
 						</a>
 					</div>

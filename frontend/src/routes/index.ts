@@ -1,7 +1,8 @@
+import DeletedPostManager from "../pages/DeletedPostManager";
 import Detail from "../pages/Detail";
 import Home from "../pages/Home";
 import NewPost from "../pages/NewPost";
-import PostManager from "../pages/PostManager";
+import PostManagerPage from "../pages/PostManagerPage";
 import SearchPage from "../pages/SearchPage";
 import UpdatePost from "../pages/UpdatePost";
 
@@ -25,8 +26,12 @@ const routes: Route[] = [
 		element: UpdatePost,
 	},
 	{
+		path: "/me/posts/deleted",
+		element: DeletedPostManager,
+	},
+	{
 		path: "/me/posts",
-		element: PostManager,
+		element: PostManagerPage,
 	},
 	{
 		path: "/search",

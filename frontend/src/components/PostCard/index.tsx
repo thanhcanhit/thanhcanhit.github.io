@@ -22,12 +22,14 @@ const PostCard = ({ post }: PostCardType) => {
 				onClick={toggleModal}
 				className="flex flex-col h-full bg-white border border-gray-200 rounded-lg shadow cursor-pointer md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
 			>
-				{post.img_path && (
-					<img
-						className="object-cover object-top w-full rounded-t-lg h-60 md:h-full md:w-48 md:rounded-none md:rounded-l-lg"
-						src={post.img_path}
-					/>
-				)}
+				<img
+					className="object-cover object-top w-full rounded-t-lg h-60 md:h-full md:w-48 md:rounded-none md:rounded-l-lg"
+					src={post.img_path}
+					onError={({ currentTarget }) => {
+						currentTarget.onerror = null; // prevents looping
+						currentTarget.src = "/assets/imgs/image_null.png";
+					}}
+				/>
 				<div className="flex flex-col justify-between flex-1 p-4 text-xs leading-normal">
 					<div className="mb-2">
 						<h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white line-clamp-2">

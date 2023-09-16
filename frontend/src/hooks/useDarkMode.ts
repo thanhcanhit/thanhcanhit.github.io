@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function useDarkMode() {
+export default function useDarkMode(): [boolean, () => void] {
 	const LOCAL_KEY = "theme";
 	const [isDarkMode, setDarkMode] = useState<boolean>(() => {
 		const localData = localStorage.getItem(LOCAL_KEY) || "false";
@@ -14,17 +14,16 @@ export default function useDarkMode() {
 		);
 	});
 
-	const handleToggleDarkMode: () => void = () => {
+	function handleToggleDarkMode() {
 		const newValue = !isDarkMode;
+
 		setDarkMode(newValue);
 		localStorage.setItem(LOCAL_KEY, JSON.stringify(newValue));
-	};
+	}
 
 	useEffect(() => {
 		document.documentElement.classList.toggle("dark", isDarkMode);
 	}, [isDarkMode]);
 
-	const control: [boolean, () => void] = [isDarkMode, handleToggleDarkMode];
-
-	return control;
+	return [isDarkMode, handleToggleDarkMode];
 }

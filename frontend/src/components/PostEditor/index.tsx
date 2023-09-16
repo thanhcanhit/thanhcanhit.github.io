@@ -1,9 +1,9 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, Popover } from "antd";
 import TagSelect from "./TagSelect";
 import TextEditor from "./TextEditor";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../redux/authSlice";
-import { useState } from "react";
+import React, { useState } from "react";
 import Forbidden from "../Forbidden";
 import { Post } from "../../interface/Post";
 
@@ -32,6 +32,7 @@ const PostEditor = ({ onFinish, post }: PostEditorType) => {
 	const user = useSelector(userSelector);
 	const [tags, setTags] = useState<string[]>(post?.tags || []);
 	const [content, setContent] = useState<string>(post?.content || "");
+	const [imgPath, setImgPath] = useState<string>("");
 
 	if (!user || !user.isAdmin) return <Forbidden />;
 
@@ -80,9 +81,29 @@ const PostEditor = ({ onFinish, post }: PostEditorType) => {
 						<Input placeholder="Mô tả về bài viết này" />
 					</Form.Item>
 
-					<Form.Item<FieldType> label="Ảnh đại diện" name="img_path">
-						<Input placeholder="Địa chỉ hình ảnh đại diện cho bài viết" />
-					</Form.Item>
+					<Popover
+						title="Preview"
+						content={
+							<img
+								width={300}
+								src={imgPath}
+								className="object-contain"
+								onError={({ currentTarget }) => {
+									currentTarget.onerror = null; // prevents looping
+									currentTarget.src = "/assets/imgs/image_null.png";
+								}}
+							/>
+						}
+					>
+						<Form.Item<FieldType> label="Ảnh đại diện" name="img_path">
+							<Input
+								placeholder="Địa chỉ hình ảnh đại diện cho bài viết"
+								onChange={(e: React.FormEvent<HTMLInputElement>) =>
+									setImgPath(e.currentTarget.value)
+								}
+							/>
+						</Form.Item>
+					</Popover>
 
 					<Form.Item<FieldType> label="Sản phẩm" name="procLink">
 						<Input placeholder="Địa chỉ tới sản phẩm" />
