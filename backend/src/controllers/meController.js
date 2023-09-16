@@ -7,7 +7,10 @@ class MeController {
 		try {
 			let { user_id } = req.query;
 
-			const posts = await Post.find({ user_id: user_id }).sort({
+			const posts = await Post.find({
+				user_id: user_id,
+				deletedAt: { $exists: false },
+			}).sort({
 				createdAt: -1,
 			});
 
@@ -17,11 +20,63 @@ class MeController {
 		}
 	}
 
+	// [GET] /me/posts/size
+	async getListSize(req, res, next) {
+		try {
+			let { user_id } = req.query;
+
+			const size = await Post.count({
+				user_id: user_id,
+				deletedAt: { $exists: false },
+			});
+
+			res.json({ message: "Completed", data: size });
+		} catch (err) {
+			next(err);
+		}
+	}
+
+	// [GET] /me/posts/deleted
+	async getListDeleted(req, res, next) {
+		try {
+			let { user_id } = req.query;
+
+			const posts = await Post.find({
+				user_id: user_id,
+				deletedAt: { $exists: true },
+			}).sort({
+				createdAt: -1,
+			});
+
+			res.json({ message: "Completed", data: posts });
+		} catch (err) {
+			next(err);
+		}
+	}
+	// [GET] /me/posts/deleted/size
+	async getListDeletedSize(req, res, next) {
+		try {
+			let { user_id } = req.query;
+
+			const size = await Post.count({
+				user_id: user_id,
+				deletedAt: { $exists: true },
+			});
+
+			res.json({ message: "Completed", data: size });
+		} catch (err) {
+			next(err);
+		}
+	}
+
 	// [GET] /posts/size
 	async getSize(req, res, next) {
 		try {
 			let { user_id } = req.query;
-			const numPosts = await Post.find({ user_id }).count();
+			const numPosts = await Post.find({
+				user_id,
+				deletedAt: { $exists: false },
+			}).count();
 			res.json({ message: "Completed", data: numPosts });
 		} catch (err) {
 			next(err);
@@ -42,6 +97,7 @@ class MeController {
 				const posts = await Post.find({
 					user_id: user_id,
 					title: { $regex: titlePattern },
+					deletedAt: { $exists: false },
 				}).sort({ createdAt: -1 });
 				return res.json({ message: "Completed", data: posts });
 			} else {

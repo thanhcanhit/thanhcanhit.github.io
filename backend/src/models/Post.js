@@ -14,6 +14,7 @@ const postSchema = new Schema(
 		user_id: { type: Schema.ObjectId, ref: "User" },
 		rating: { type: Number, default: 0 },
 		view: { type: Number, default: 0 },
+		deletedAt: {type: Date},
 	},
 	{ timestamps: true }
 );

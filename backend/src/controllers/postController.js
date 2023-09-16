@@ -6,7 +6,10 @@ class PostController {
 	async getOne(req, res, next) {
 		try {
 			const postId = req.params.id;
-			const post = await Post.findOne({ _id: postId })
+			const post = await Post.findOne({
+				_id: postId,
+				deletedAt: { $exists: false },
+			})
 				.populate("user_id")
 				.exec();
 
@@ -47,7 +50,9 @@ class PostController {
 			if (!limit) limit = 10;
 			if (!offset) offset = 0;
 
-			const posts = await Post.find({})
+			const posts = await Post.find({
+				deletedAt: { $exists: false },
+			})
 				.skip(offset)
 				.limit(limit)
 				.sort({ createdAt: -1 });
@@ -61,7 +66,9 @@ class PostController {
 	// [GET] /post/size
 	async getSize(req, res, next) {
 		try {
-			const numPosts = await Post.count();
+			const numPosts = await Post.find({
+				deletedAt: { $exists: false },
+			}).count();
 			res.json({ message: "Completed", data: numPosts });
 		} catch (err) {
 			next(err);
@@ -81,12 +88,14 @@ class PostController {
 			if (!tags) {
 				const posts = await Post.find({
 					title: { $regex: titlePattern },
+					deletedAt: { $exists: false },
 				}).sort({ createdAt: -1 });
 				return res.json({ message: "Completed", data: posts });
 			} else {
 				const posts = await Post.find({
 					tags: { $all: tags },
 					title: { $regex: titlePattern },
+					deletedAt: { $exists: false },
 				}).sort({ createdAt: -1 });
 
 				return res.json({ message: "Completed", data: posts });
@@ -107,7 +116,10 @@ class PostController {
 				...reqData,
 			});
 			await post.save();
-			const userArticleCount = await Post.find({ user_id: user_id }).count();
+			const userArticleCount = await Post.find({
+				user_id: user_id,
+				deletedAt: { $exists: false },
+			}).count();
 			if (user_id) {
 				await User.findOneAndUpdate(
 					{ _id: user_id },
@@ -121,7 +133,37 @@ class PostController {
 		}
 	}
 
-	// [POST] /post/:postId
+	// [PATCH] /post/:postId/restore
+	async restore(req, res, next) {
+		try {
+			const { post_id } = req.params;
+
+			const post = await Post.findOne({ _id: post_id });
+			const user_id = post.user_id;
+			// Update new article count for this user
+			const userArticleCount = await Post.find({
+				user_id: user_id,
+				deletedAt: { $exists: false },
+			}).count();
+
+			if (user_id) {
+				await User.findOneAndUpdate(
+					{ _id: user_id },
+					{ $set: { numPost: userArticleCount } }
+				);
+			}
+
+			await Post.findByIdAndUpdate(post_id, {
+				$unset: { deletedAt: "" },
+			});
+
+			res.json({ message: "Complete" });
+		} catch (err) {
+			next(err);
+		}
+	}
+
+	// [PATCH] /post/:postId
 	async delete(req, res, next) {
 		try {
 			const { post_id } = req.params;
@@ -129,7 +171,40 @@ class PostController {
 			const post = await Post.findOne({ _id: post_id });
 			const user_id = post.user_id;
 			// Update new article count for this user
-			const userArticleCount = await Post.find({ user_id: user_id }).count();
+			const userArticleCount = await Post.find({
+				user_id: user_id,
+				deletedAt: { $exists: false },
+			}).count();
+
+			if (user_id) {
+				await User.findOneAndUpdate(
+					{ _id: user_id },
+					{ $set: { numPost: userArticleCount } }
+				);
+			}
+
+			await Post.findByIdAndUpdate(post_id, {
+				$set: { deletedAt: new Date() },
+			});
+
+			res.json({ message: "Complete" });
+		} catch (err) {
+			next(err);
+		}
+	}
+
+	// [POST] /post/:postId
+	async forceDelete(req, res, next) {
+		try {
+			const { post_id } = req.params;
+
+			const post = await Post.findOne({ _id: post_id });
+			const user_id = post.user_id;
+			// Update new article count for this user
+			const userArticleCount = await Post.find({
+				user_id: user_id,
+				deletedAt: { $exists: false },
+			}).count();
 			if (user_id) {
 				await User.findOneAndUpdate(
 					{ _id: user_id },

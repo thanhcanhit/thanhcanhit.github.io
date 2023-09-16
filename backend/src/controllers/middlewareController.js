@@ -4,6 +4,7 @@ const middlewareController = {
 	verifyToken: async (req, res, next) => {
 		try {
 			const author = req.headers?.authorization;
+			console.log(author)
 			if (!author) return res.sendStatus(401);
 
 			// Check token is valid
