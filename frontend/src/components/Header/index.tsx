@@ -39,7 +39,7 @@ const Header = () => {
 							(isMenuOpen && " active")
 						}
 					>
-						<ul className="flex flex-col gap-2 p-4 mt-4 font-medium border border-gray-100 rounded-lg lg:gap-0 lg:p-0 bg-gray-50 lg:flex-row lg:space-x-8 lg:mt-0 lg:border-0 lg:bg-white dark:bg-gray-800 lg:dark:bg-gray-900 dark:border-gray-700">
+						<ul className="flex flex-col gap-2 p-4 mt-4 font-medium list-none border border-gray-100 rounded-lg lg:gap-0 lg:p-0 bg-gray-50 lg:flex-row lg:space-x-8 lg:mt-0 lg:border-0 lg:bg-white dark:bg-gray-800 lg:dark:bg-gray-900 dark:border-gray-700">
 							<li className="self-center">
 								{user ? (
 									<Account />

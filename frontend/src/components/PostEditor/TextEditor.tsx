@@ -11,7 +11,7 @@ const TextEditor = ({ content, setContent }: TextEditorType) => {
 		<JoditEditor
 			className="text-black"
 			value={content}
-			config={{ height: 600}}
+			config={{ height: 600 }}
 			onBlur={(newContent) => setContent(newContent)}
 		/>
 	);

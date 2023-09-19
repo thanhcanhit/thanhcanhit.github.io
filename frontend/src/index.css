@@ -3,16 +3,16 @@
 @tailwind utilities;
 
 .ant-btn.ant-btn-primary {
-	background-color: #1677ff!important;
+	background-color: #1677ff !important;
 }
 
 .jodit-ui-button.jodit-ui-button_variant_primary {
-	background-color: #1677ff!important;
+	background-color: #1677ff !important;
 }
 
-@layer base { 	
+@layer base {
 
-		/* width */
+	/* width */
 	::-webkit-scrollbar {
 		width: 8px;
 	}
@@ -31,6 +31,34 @@
 	::-webkit-scrollbar-thumb:hover {
 		background: #2c2c2c;
 	}
+
+	ul, ol {
+		@apply pl-10 mt-4;
+	}
+
+	ol {
+		@apply list-decimal;
+	}
+
+	ul {
+		@apply list-disc;
+	}
+
+	.jodit-render a {
+		@apply font-medium text-blue-600 transition-all dark:text-blue-500 hover:brightness-150 hover:underline;
+	}
+
+	.jodit-render strong {
+		@apply block my-1 indent-0;
+	}
+
+	.jodit-render p+p {
+		@apply block my-4;
+	}
+
+	.jodit-render ul, ol {
+		@apply pl-10 mt-4;
+	}
 }
 
 @layer components {
@@ -45,32 +73,26 @@
 	.button-normal {
 		@apply text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700;
 	}
+
 	.button-light {
 		@apply text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2;
 	}
+
 	.button-primary {
 		@apply focus:outline-none text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800 disabled:opacity-30 disabled:cursor-not-allowed;
 	}
 }
+
 @layer utilities {
 	.border-normal {
 		@apply border border-gray-200 dark:border-gray-700;
 	}
+
 	.bg-normal {
 		@apply bg-gray-100 dark:bg-gray-900;
 	}
 
 	.text-normal {
 		@apply text-gray-900 dark:text-white;
-	}
-
-	.jodic-render a{
-		@apply font-medium text-blue-600 transition-all dark:text-blue-500 hover:brightness-150 hover:underline;
-	}
-	.jodic-render strong{
-		@apply block my-1 indent-0;
-	}
-	.jodic-render p{
-		@apply block text-justify indent-6;
 	}
 }

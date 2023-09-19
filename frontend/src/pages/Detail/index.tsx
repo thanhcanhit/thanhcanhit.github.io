@@ -20,7 +20,7 @@ const options: HTMLReactParserOptions = {
 	replace: (domNode) => {
 		if (domNode instanceof Element && domNode.attribs.src) {
 			return (
-				<div className="grid items-center mx-auto border w-fit">
+				<div className="grid items-center mx-auto rounded-md w-fit">
 					<Image className={imgClassName} src={domNode.attribs.src} />
 				</div>
 			);
@@ -114,7 +114,7 @@ const Detail = () => {
 							<RatingAndView post={post} />
 						</div>
 						<Image.PreviewGroup>
-							<div className="max-w-full mt-4 jodic-render">
+							<div className="max-w-full mt-4 jodit-render">
 								{htmlParser(post.content, options)}
 							</div>
 						</Image.PreviewGroup>
