@@ -1,18 +1,24 @@
-import Comment from "../models/Comment.js";
-import Post from "../models/Post.js";
-
+const Comment = require("../models/Comment.js");
+const Post = require("../models/Post.js");
 class CommentController {
 	// [GET] /comment/:id
 	async getOne(req, res, next) {
 		try {
 			const id = req.params.id;
-			const comment = await Comment.findOne({ _id: id });
-
-			if (!comment) res.json({ message: "Not found", data: {} });
+			const comment = await Comment.findOne({
+				_id: id,
+			});
+			if (!comment)
+				res.json({
+					message: "Not found",
+					data: {},
+				});
 			else {
 				res.json({
 					message: "Completed",
-					data: { comment },
+					data: {
+						comment,
+					},
 				});
 			}
 		} catch (err) {
@@ -28,13 +34,18 @@ class CommentController {
 			// if (!limit) limit = 10;
 			// if (!offset) offset = 0;
 
-			const comments = await Comment.find({ post_id: postId }).sort({
+			const comments = await Comment.find({
+				post_id: postId,
+			}).sort({
 				createdAt: -1,
 			});
 			// .skip(offset)
 			// .limit(limit);
 
-			res.json({ message: "Completed", data: comments });
+			res.json({
+				message: "Completed",
+				data: comments,
+			});
 		} catch (err) {
 			next(err);
 		}
@@ -44,10 +55,13 @@ class CommentController {
 	async getCommentQuantityOfPost(req, res, next) {
 		try {
 			const postId = req.params.postId;
-
-			const comments = await Comment.find({ post_id: postId }).count();
-
-			res.json({ message: "Completed", data: comments });
+			const comments = await Comment.find({
+				post_id: postId,
+			}).count();
+			res.json({
+				message: "Completed",
+				data: comments,
+			});
 		} catch (err) {
 			next(err);
 		}
@@ -79,19 +93,25 @@ class CommentController {
 
 				// Cập nhật rating của post với giá trị trung bình
 				const result = await Post.updateOne(
-					{ _id: newComment.post_id },
-					{ $set: { rating: averageRating } }
+					{
+						_id: newComment.post_id,
+					},
+					{
+						$set: {
+							rating: averageRating,
+						},
+					}
 				);
-
 				console.log("Post rating updated:", result.rating);
 				res.json(newComment);
 			} catch (error) {
-				res.json({ Error: "Some thing not correct" });
+				res.json({
+					Error: "Some thing not correct",
+				});
 			}
 		} catch (err) {
 			next(err);
 		}
 	}
 }
-
-export default new CommentController();
+module.exports = new CommentController();

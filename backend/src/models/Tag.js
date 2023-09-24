@@ -1,7 +1,9 @@
-import { Schema, model } from "mongoose";
-
+const { Schema, model } = require("mongoose");
 const BoxCommentSchema = new Schema({
-	name: { type: String, unique: true, index: 1 },
+	name: {
+		type: String,
+		unique: true,
+		index: 1,
+	},
 });
-
-export default model("Tag", BoxCommentSchema);
+module.exports = model("Tag", BoxCommentSchema);

@@ -1,47 +1,46 @@
-import User from "../models/User.js";
-import jwt from "jsonwebtoken";
-import {
+const User = require("../models/User.js");
+const jwt = require("jsonwebtoken");
+const {
 	encode,
 	compare,
 	createAccessToken,
 	createRefreshToken,
-} from "../util/index.js";
-
+} = require("../util/index.js");
 class AuthController {
 	// [POST] /auth/login
 	async login(req, res, next) {
 		try {
 			const { username, password } = req.body;
-
-			const user = await User.findOne({ username: username });
-
+			const user = await User.findOne({
+				username: username,
+			});
 			if (!user)
 				return res.status(401).json({
 					message: "Username is not exists",
 					data: {},
 				});
-
 			const isCorrectPassword = await compare(password, user.password);
-
 			res.set("Access-Control-Allow-Credentials", true);
-
 			if (!isCorrectPassword) {
-				return res.status(401).json({ message: "Password is not correct" });
+				return res.status(401).json({
+					message: "Password is not correct",
+				});
 			} else {
 				const { password, ...payload } = user.toJSON();
 				const accessToken = createAccessToken(payload);
 				const refreshToken = createRefreshToken(payload);
-
 				res.cookie("REFRESH_TOKEN", refreshToken, {
 					expires: new Date(Date.now() + 3600 * 1000 * 24 * 180 * 1),
 					sameSite: "none",
 					httpOnly: true,
 					secure: true,
 				});
-
 				res.json({
 					message: "Completed",
-					data: { ...payload, accessToken: accessToken },
+					data: {
+						...payload,
+						accessToken: accessToken,
+					},
 				});
 			}
 		} catch (err) {
@@ -54,27 +53,30 @@ class AuthController {
 		try {
 			const refreshToken = req.cookies?.REFRESH_TOKEN;
 			if (!refreshToken) return res.sendStatus(401);
-
 			const decode = jwt.verify(refreshToken, process.env.REFRESH_KEY);
 			if (!decode) return res.sendStatus(403);
 
 			// Generate new token
 			const { iat, exp, ...payload } = decode;
-			const newAccessToken = createAccessToken({ ...payload });
-			const newRefreshToken = createRefreshToken({ ...payload });
-
+			const newAccessToken = createAccessToken({
+				...payload,
+			});
+			const newRefreshToken = createRefreshToken({
+				...payload,
+			});
 			res.set("Access-Control-Allow-Credentials", true);
-
 			res.cookie("REFRESH_TOKEN", newRefreshToken, {
 				expires: new Date(Date.now() + 3600 * 1000 * 24 * 180 * 1),
 				sameSite: "none",
 				httpOnly: true,
 				secure: true,
 			});
-
 			return res.json({
 				message: "Completed",
-				data: { ...payload, accessToken: newAccessToken },
+				data: {
+					...payload,
+					accessToken: newAccessToken,
+				},
 			});
 		} catch (err) {
 			next(err);
@@ -86,17 +88,17 @@ class AuthController {
 		try {
 			const reqData = req.body;
 			const hashPassword = await encode(reqData.password);
-
 			try {
 				const user = new User({
 					...reqData,
 					password: hashPassword,
 				});
 				await user.save();
-
 				res.json(user);
 			} catch (createError) {
-				res.json({ error: "username already exists" });
+				res.json({
+					error: "username already exists",
+				});
 			}
 		} catch (err) {
 			next(err);
@@ -106,8 +108,9 @@ class AuthController {
 	// [POST] /auth/logout
 	async logout(req, res, next) {
 		res.clearCookie("REFRESH_TOKEN");
-		res.json({ message: "Logout completed" });
+		res.json({
+			message: "Logout completed",
+		});
 	}
 }
-
-export default new AuthController();
+module.exports = new AuthController();

@@ -1,21 +1,25 @@
-import jwt from "jsonwebtoken";
-
+const jwt = require("jsonwebtoken");
 const middlewareController = {
 	verifyToken: async (req, res, next) => {
 		try {
 			const author = req.headers?.authorization;
-			console.log(author)
+			console.log(author);
 			if (!author) return res.sendStatus(401);
 
 			// Check token is valid
 			try {
 				const token = author.split(" ")[1];
 				const decode = jwt.verify(token, process.env.PRIVATE_KEY);
-				if (!decode) return res.status(401).json({ err: "Invalid token" });
+				if (!decode)
+					return res.status(401).json({
+						err: "Invalid token",
+					});
 				req.decodeData = decode;
 				next();
 			} catch (invalidTokenErr) {
-				res.status(403).json({ err: "Invalid token" });
+				res.status(403).json({
+					err: "Invalid token",
+				});
 			}
 		} catch (err) {
 			next(err);
@@ -26,9 +30,10 @@ const middlewareController = {
 			if (req.decodeData.isAdmin || req.decodeData._id === req.query.user_id) {
 				return next();
 			}
-			return res.status(403).json({ err: "Not admin" });
+			return res.status(403).json({
+				err: "Not admin",
+			});
 		});
 	},
 };
-
-export default middlewareController;
+module.exports = middlewareController;

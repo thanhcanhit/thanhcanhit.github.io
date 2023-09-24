@@ -1,11 +1,10 @@
-import mainRoute from "./mainRoute.js";
-import userRoute from "./userRoute.js";
-import postRoute from "./postRoute.js";
-import commentRoute from "./commentRoute.js";
-import tagRoute from "./tagRoute.js";
-import authRoute from "./authRoute.js";
-import meRoute from "./meRoute.js";
-
+const mainRoute = require("./mainRoute.js");
+const userRoute = require("./userRoute.js");
+const postRoute = require("./postRoute.js");
+const commentRoute = require("./commentRoute.js");
+const tagRoute = require("./tagRoute.js");
+const authRoute = require("./authRoute.js");
+const meRoute = require("./meRoute.js");
 const declareEndpoint = (app) => {
 	app.use("/me", meRoute);
 	app.use("/user", userRoute);
@@ -15,5 +14,4 @@ const declareEndpoint = (app) => {
 	app.use("/auth", authRoute);
 	app.use("/", mainRoute);
 };
-
-export default declareEndpoint;
+module.exports = declareEndpoint;

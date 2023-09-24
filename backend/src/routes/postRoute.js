@@ -1,10 +1,8 @@
-import { Router } from "express";
-import postController from "../controllers/postController.js";
-import middlewareController from "./../controllers/middlewareController.js";
-
+const { Router } = require("express");
+const postController = require("../controllers/postController.js");
+const middlewareController = require("./../controllers/middlewareController.js");
 const router = Router();
 const controller = postController;
-
 router.get("/size", controller.getSize);
 router.get("/search", controller.search);
 router.patch(
@@ -34,5 +32,4 @@ router.post(
 	controller.create
 );
 router.get("/", controller.getList);
-
-export default router;
+module.exports = router;
