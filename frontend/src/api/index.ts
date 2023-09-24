@@ -5,7 +5,7 @@ import { refreshToken } from "./authRequest";
 import { loginSuccess } from "../redux/authSlice";
 import { Dispatch } from "@reduxjs/toolkit";
 
-const API_URL = "http://localhost:4000";
+const API_URL =  "https://thanhcanhit.id.vn";//"http://localhost:4000";
 const axiosIntance = axios.create({
 	baseURL: API_URL,
 });

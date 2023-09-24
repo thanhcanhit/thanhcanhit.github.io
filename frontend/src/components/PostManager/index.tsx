@@ -6,15 +6,7 @@ import { Empty, Table } from "antd";
 import TagList from "../../components/TagList";
 import { getAllTags } from "../../api/tagRequest";
 import { ColumnType, ColumnsType } from "antd/es/table";
-
-const tags: string[] = (await getAllTags()).data;
-
-const tagsFilters = tags.map((item) => {
-	return {
-		text: item,
-		value: item,
-	};
-});
+import { useEffect, useState } from "react";
 
 const columns: ColumnsType<Post> = [
 	{
@@ -39,15 +31,6 @@ const columns: ColumnsType<Post> = [
 		dataIndex: "shortDesc",
 		key: "shortDesc",
 	},
-	{
-		title: "Gắn thẻ",
-		dataIndex: "tags",
-		key: "tags",
-		filters: tagsFilters,
-		onFilter: (value: string | number | boolean, record) =>
-			record.tags.includes(value.toString()),
-		render: (tags: string[]) => <TagList tags={tags} />,
-	},
 ];
 
 type PostManagerType = {
@@ -57,7 +40,23 @@ type PostManagerType = {
 };
 
 const PostManager = ({ posts, actions, title }: PostManagerType) => {
+	const [tags, setTags] = useState<string[]>([]);
+	const tagsFilters = tags.map((item) => {
+		return {
+			text: item,
+			value: item,
+		};
+	});
 	const user = useSelector(userSelector);
+
+	useEffect(() => {
+		const getTagsData = async () => {
+			const response = await getAllTags();
+			setTags(response.data);
+		};
+
+		getTagsData();
+	});
 
 	if (!user)
 		return <Forbidden message="Vui lòng đăng nhập để sử dụng tính năng này" />;
@@ -83,7 +82,19 @@ const PostManager = ({ posts, actions, title }: PostManagerType) => {
 					dataSource={posts.map((post) => {
 						return { ...post, key: post._id };
 					})}
-					columns={[...columns, actions]}
+					columns={[
+						...columns,
+						{
+							title: "Gắn thẻ",
+							dataIndex: "tags",
+							key: "tags",
+							filters: tagsFilters,
+							onFilter: (value: string | number | boolean, record) =>
+								record.tags.includes(value.toString()),
+							render: (tags: string[]) => <TagList tags={tags} />,
+						},
+						actions,
+					]}
 				/>
 			</div>
 		</div>

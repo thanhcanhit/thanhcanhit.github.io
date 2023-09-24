@@ -1,7 +1,7 @@
-import { Dispatch, SetStateAction, useEffect } from "react";
+import { Dispatch, SetStateAction } from "react";
 import loginIllus from "./img/login_illustration.svg";
 import registerIllus from "./img/welcome_illustration.svg";
-import { Button, Form, Input, message, Drawer, Checkbox } from "antd";
+import { Button, Form, Input, message, Drawer } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { login, register } from "../../api/authRequest";
 import { loginSelector, registerSelector } from "../../redux/authSlice";

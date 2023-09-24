@@ -1,5 +1,3 @@
-import React from "react";
-
 const FavoriteQuote = () => {
 	return (
 		<figure className="max-w-screen-md mx-auto text-center">
@@ -27,7 +25,9 @@ const FavoriteQuote = () => {
 					<cite className="pr-3 font-medium text-gray-900 dark:text-white">
 						George M. Moore Jr.
 					</cite>
-					<cite className="pl-3 text-sm text-gray-500 dark:text-gray-400">Irish novelist</cite>
+					<cite className="pl-3 text-sm text-gray-500 dark:text-gray-400">
+						Irish novelist
+					</cite>
 				</div>
 			</figcaption>
 		</figure>
