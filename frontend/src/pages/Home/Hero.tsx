@@ -44,10 +44,7 @@ const Hero = () => {
 								</a>
 							</Popover>
 							<Popover content="Đến phần thông tin ở cuối trang">
-								<button
-									onClick={scrollToBottom}
-									className="inline-flex items-center justify-center gap-2 px-5 py-3 text-base font-medium text-center text-white rounded-lg bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:ring-emerald-300 dark:focus:ring-emerald-900"
-								>
+								<button onClick={scrollToBottom} className="flex items-center justify-center gap-2 button-primary">
 									About me
 									<IoIosArrowDown className="relative top-[2px]" />
 								</button>

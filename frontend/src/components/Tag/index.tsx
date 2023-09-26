@@ -13,7 +13,7 @@ const Tag = ({ name }: { name: string }) => {
 	return (
 		<button
 			onClick={handleClick}
-			className="cursor-pointer hover:brightness-125 transition-all bg-gray-200 border border-gray-400 dark:border-0 text-gray-800 text-xs font-medium  px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300 whitespace-nowrap"
+			className="cursor-pointer hover:brightness-125 transition-all bg-gray-200 border border-gray-300 dark:border-0 text-gray-800 text-xs font-medium  px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300 whitespace-nowrap"
 		>
 			#{name}
 		</button>

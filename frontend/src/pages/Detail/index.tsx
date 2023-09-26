@@ -91,7 +91,7 @@ const Detail = () => {
 
 	if (!post)
 		return (
-			<div className="flex justify-center">
+			<div className="flex justify-center pt-10">
 				<Spin />
 			</div>
 		);

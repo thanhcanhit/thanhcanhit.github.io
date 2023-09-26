@@ -79,7 +79,7 @@
 	}
 
 	.button-primary {
-		@apply focus:outline-none text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-emerald-600 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800 disabled:opacity-30 disabled:cursor-not-allowed;
+	@apply focus:outline-none text-white dark:text-black bg-dark-primary hover:brightness-75 focus:ring-4 focus:ring-primary font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-primary dark:hover:brightness-75 dark:focus:ring-dark-primary disabled:opacity-30 disabled:cursor-not-allowed;
 	}
 }
 

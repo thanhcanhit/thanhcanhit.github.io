@@ -37,7 +37,7 @@ const PostModal = ({ post, isOpen, onCancel }: PostModalType) => {
 				<p className="mb-2 text-sm italic text-black whitespace-normal line-clamp-3">
 					{post.shortDesc}
 				</p>
-				<div className="line-clamp-5">
+				<div className="line-clamp-6">
 					{htmlParser(post.content, {
 						replace: (domNode) => {
 							if (
