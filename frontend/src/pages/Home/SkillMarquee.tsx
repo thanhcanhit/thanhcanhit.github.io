@@ -10,46 +10,28 @@ import {
 } from "react-icons/bi";
 import { SiRedux, SiExpress, SiMongodb } from "react-icons/si";
 
-const icons: { title: string; icon: IconType }[] = [
-	{ title: "HTML5", icon: AiFillHtml5 },
-	{ title: "CSS3", icon: FaCss3Alt },
-	{ title: "JavaScript", icon: BiLogoJavascript },
-	{ title: "Sass", icon: FaSass },
-	{ title: "React.js", icon: FaReact },
-	{ title: "TypeScript", icon: BiLogoTypescript },
-	{ title: "Redux", icon: SiRedux },
-	{ title: "Tailwindcss", icon: BiLogoTailwindCss },
-	{ title: "Bootstrap", icon: BiLogoBootstrap },
-	{ title: "Ant Design", icon: AiOutlineAntDesign },
-	{ title: "Node.js", icon: FaNodeJs },
+const icons: { title: string; icon: IconType, color?: string }[] = [
+	{ title: "HTML5", icon: AiFillHtml5, color: "#ff5c29" },
+	{ title: "CSS3", icon: FaCss3Alt, color: "#299cf8"},
+	{ title: "JavaScript", icon: BiLogoJavascript, color: "#f7e025" },
+	{ title: "Sass", icon: FaSass, color: "#cf6c9c" },
+	{ title: "React.js", icon: FaReact, color: "#08daff"},
+	{ title: "TypeScript", icon: BiLogoTypescript, color: "#377cc8" },
+	{ title: "Redux", icon: SiRedux, color: "#7a50be" },
+	{ title: "Tailwindcss", icon: BiLogoTailwindCss, color: "#21b4bc" },
+	{ title: "Bootstrap", icon: BiLogoBootstrap, color: "#7f18f9" },
+	{ title: "Ant Design", icon: AiOutlineAntDesign, color: "#228eff" },
+	{ title: "Node.js", icon: FaNodeJs, color: "#72aa62" },
 	{ title: "Express.js", icon: SiExpress },
-	{ title: "NoSQL MongoDB", icon: SiMongodb },
+	{ title: "NoSQL MongoDB", icon: SiMongodb, color: "#5dad55" },
 ];
 
 const SkillMarquee = () => {
 	return (
 		<Marquee className="py-12 overflow-hidden text-6xl text-normal">
 			{icons.map((item) => (
-				<div
-					key={item.title}
-					className="mx-8"
-					title={item.title}
-					data-popover-target={item.title}
-					data-popover-trigger="hover"
-				>
+				<div key={item.title} className="mx-8" title={item.title} style={{color: item.color}}>
 					{item.icon({})}
-
-					<div
-						data-popover
-						id={item.title}
-						role="tooltip"
-						className="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800"
-					>
-						<div className="px-3 py-2">
-							<p>{item.title}</p>
-						</div>
-						<div data-popper-arrow></div>
-					</div>
 				</div>
 			))}
 		</Marquee>

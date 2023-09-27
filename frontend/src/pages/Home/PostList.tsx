@@ -18,7 +18,7 @@ const skeletonWhenLoading = (
 
 const PostList = () => {
 	const [totalItems, setTotalItems] = useState<number>(0);
-	const limit = 6;
+	const limit = 9;
 
 	const postListRef = useRef<HTMLDivElement>(null);
 	const [posts, setPosts] = useState<Post[]>([]);
