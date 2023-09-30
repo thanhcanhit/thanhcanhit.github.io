@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 export default function useDarkMode(): [boolean, () => void] {
-	const LOCAL_KEY = "theme";
+	const LOCAL_KEY = "jek1jlejdoHFOIJIO@J)*!JFDSJFLKDJFLKJDSLKFJLD";
 	const [isDarkMode, setDarkMode] = useState<boolean>(() => {
 		const localData = localStorage.getItem(LOCAL_KEY) || "false";
 		const prevIsDarkMode = Boolean(JSON.parse(localData));
