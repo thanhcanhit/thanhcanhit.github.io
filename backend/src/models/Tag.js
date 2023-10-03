@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+
 const BoxCommentSchema = new Schema({
 	name: {
 		type: String,
@@ -6,4 +7,5 @@ const BoxCommentSchema = new Schema({
 		index: 1,
 	},
 });
+
 module.exports = model("Tag", BoxCommentSchema);

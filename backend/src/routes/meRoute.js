@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const meController = require("../controllers/meController.js");
 const middlewareController = require("./../controllers/middlewareController.js");
+
 const router = Router();
 const controller = meController;
 router.get("/posts/size", controller.getListSize);
@@ -20,4 +21,5 @@ router.get(
 	middlewareController.verifyAndAdmin.bind(middlewareController),
 	controller.getSize
 );
+
 module.exports = router;

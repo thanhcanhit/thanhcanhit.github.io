@@ -3,7 +3,7 @@ const middlewareController = {
 	verifyToken: async (req, res, next) => {
 		try {
 			const author = req.headers?.authorization;
-			console.log(author);
+			console.log(author ? "Has token": "Token is undefined");
 			if (!author) return res.sendStatus(401);
 
 			// Check token is valid

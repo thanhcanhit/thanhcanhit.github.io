@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const postController = require("../controllers/postController.js");
 const middlewareController = require("./../controllers/middlewareController.js");
+
 const router = Router();
 const controller = postController;
 router.get("/size", controller.getSize);
@@ -32,4 +33,5 @@ router.post(
 	controller.create
 );
 router.get("/", controller.getList);
+
 module.exports = router;

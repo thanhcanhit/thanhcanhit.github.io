@@ -44,5 +44,19 @@ class UserController {
 			next(err);
 		}
 	}
+
+	// [PUT] /user/:username/update
+	async update(req, res, next) {
+		const username = req.params.username;
+		const newData = req.body;
+		await User.findOneAndUpdate(
+			{ username: username },
+			{ $set: { ...newData } }
+		);
+
+		const newUser = await User.findOne({username: username});
+
+		res.json({message: "Completed", data: newUser})
+	}
 }
 module.exports = new UserController();

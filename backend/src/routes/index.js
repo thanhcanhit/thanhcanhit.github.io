@@ -5,6 +5,7 @@ const commentRoute = require("./commentRoute.js");
 const tagRoute = require("./tagRoute.js");
 const authRoute = require("./authRoute.js");
 const meRoute = require("./meRoute.js");
+
 const declareEndpoint = (app) => {
 	app.use("/me", meRoute);
 	app.use("/user", userRoute);
@@ -14,4 +15,5 @@ const declareEndpoint = (app) => {
 	app.use("/auth", authRoute);
 	app.use("/", mainRoute);
 };
+
 module.exports = declareEndpoint;

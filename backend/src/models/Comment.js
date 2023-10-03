@@ -1,5 +1,7 @@
 const { Schema, model } = require("mongoose");
+
 Schema.Types.String.set("trim", true);
+
 const commentSchema = new Schema(
 	{
 		post_id: {
@@ -27,4 +29,5 @@ const commentSchema = new Schema(
 		timestamps: true,
 	}
 );
+
 module.exports = model("Comment", commentSchema);
