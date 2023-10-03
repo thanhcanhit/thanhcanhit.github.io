@@ -30,17 +30,15 @@ type FieldType = {
 
 const PostEditor = ({ onFinish, post }: PostEditorType) => {
 	const user = useSelector(userSelector);
-	const [tags, setTags] = useState<string[]>(post?.tags || []);
+	const [tags, setTags] = useState<string[]>([]);
 	const [content, setContent] = useState<string>(post?.content || "");
-	const [imgPath, setImgPath] = useState<string>("");
+	const [imgPath, setImgPath] = useState<string>(post?.img_path || "");
 
 	if (!user || !user.isAdmin) return <Forbidden />;
 
 	return (
 		<div className="container zpy-4 text-normal">
-			<h1 className="mb-4 text-3xl font-semibold text-center">
-				Tạo bài viết mới
-			</h1>
+			<h1 className="mb-4 text-3xl font-semibold text-center">Post Editor</h1>
 			<div className="p-8 bg-white rounded-lg w-[min(1000px,100%)] mx-auto border-normal">
 				<Form
 					key={"newpost"}

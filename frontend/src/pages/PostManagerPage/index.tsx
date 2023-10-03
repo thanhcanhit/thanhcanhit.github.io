@@ -25,14 +25,15 @@ const PostManagerPage = () => {
 
 	useEffect(() => {
 		if (!user?._id) return;
+		const axiosJWT = createAxiosJWT(user, dispatch);
 		const getPosts = async () => {
-			const axiosJWT = createAxiosJWT(user, dispatch);
 			const response = await getPostsOfUser(
 				user._id,
 				user.accessToken,
 				axiosJWT
 			);
-			if (response.data) setPosts(response.data);
+			if (response?.data) setPosts(response.data);
+			else console.log("response error: " + response);
 		};
 
 		getPosts();

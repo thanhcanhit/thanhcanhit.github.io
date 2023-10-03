@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Divider, Input, Select, Space, Button } from "antd";
-import type { InputRef, SelectProps } from "antd";
+import type { SelectProps } from "antd";
 import { createTag, getAllTags } from "../../api/tagRequest";
 
 interface ItemProps {
@@ -13,17 +13,16 @@ type TagSelectType = {
 	value: string[];
 	setValue: React.Dispatch<React.SetStateAction<string[]>>;
 };
+
 const TagSelect = ({ value, setValue }: TagSelectType) => {
 	const [name, setName] = useState("");
-	const inputRef = useRef<InputRef>(null);
 	const [options, setOptions] = useState<ItemProps[]>([]);
-	const [temp, setTemp] = useState<boolean>(false);
 
 	const selectProps: SelectProps = {
 		mode: "multiple",
 		allowClear: true,
 		autoClearSearchValue: true,
-		value: value,
+		defaultValue: value,
 		options,
 		onChange: (newValue: string[]) => {
 			setValue(newValue);
@@ -43,7 +42,7 @@ const TagSelect = ({ value, setValue }: TagSelectType) => {
 		}
 
 		getTags();
-	}, [temp]);
+	}, []);
 
 	const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setName(event.target.value);
@@ -53,16 +52,14 @@ const TagSelect = ({ value, setValue }: TagSelectType) => {
 		e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
 	) => {
 		e.preventDefault();
-		setTemp(!temp);
 		try {
 			await createTag(name);
+			// Thêm tag mới vào options và value
+			setOptions([...options, { label: name, value: name.toString() }]);
+			setValue((prev) => [...prev, name]);
 			setName("");
 		} catch (err) {
-			console.log("Error when creating tag");
-		} finally {
-			setTimeout(() => {
-				inputRef.current?.focus();
-			}, 0);
+			console.log("Error when creating tag", err);
 		}
 	};
 
@@ -70,6 +67,7 @@ const TagSelect = ({ value, setValue }: TagSelectType) => {
 		<Select
 			placeholder="Thêm tag vào vài viết của bạn"
 			mode="multiple"
+			{...selectProps}
 			dropdownRender={(menu) => (
 				<>
 					{menu}
@@ -77,22 +75,16 @@ const TagSelect = ({ value, setValue }: TagSelectType) => {
 					<Space style={{ padding: "0 8px 4px" }}>
 						<Input
 							placeholder="Tag name"
-							ref={inputRef}
 							value={name}
 							onChange={onNameChange}
 							required
 						/>
-						<Button
-							type="text"
-							icon={<PlusOutlined />}
-							onClick={addItem}
-						>
+						<Button type="text" icon={<PlusOutlined />} onClick={addItem}>
 							Thêm tag
 						</Button>
 					</Space>
 				</>
 			)}
-			{...selectProps}
 		/>
 	);
 };

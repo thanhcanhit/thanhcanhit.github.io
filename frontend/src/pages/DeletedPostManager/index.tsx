@@ -35,7 +35,7 @@ const DeletedPostManager = () => {
 				user.accessToken,
 				axiosJWT
 			);
-			if (response.data) setPosts(response.data);
+			if (response?.data) setPosts(response.data);
 		};
 
 		getPosts();

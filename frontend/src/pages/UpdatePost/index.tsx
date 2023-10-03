@@ -28,7 +28,12 @@ const UpdatePost = () => {
 	}, [postId]);
 
 	// Conditional rendering
-	if (!post) return <div className="grid items-center pt-4"><Spin/></div>;
+	if (!post)
+		return (
+			<div className="grid items-center pt-4">
+				<Spin />
+			</div>
+		);
 	if (!user || !user.isAdmin) return <Forbidden />;
 
 	const axiosJWT = createAxiosJWT(user, dispatch);

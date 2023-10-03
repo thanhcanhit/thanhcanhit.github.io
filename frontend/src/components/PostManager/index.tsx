@@ -56,7 +56,7 @@ const PostManager = ({ posts, actions, title }: PostManagerType) => {
 		};
 
 		getTagsData();
-	});
+	}, []);
 
 	if (!user)
 		return <Forbidden message="Vui lòng đăng nhập để sử dụng tính năng này" />;

@@ -6,29 +6,45 @@ import { Button, Dropdown } from "antd";
 import { Link } from "react-router-dom";
 import UserAvatar from "../UserAvatar";
 import { logout } from "../../api/authRequest";
+import { useState } from "react";
+import UserEditor from "../UserEditor";
 
 const adminItems: MenuProps["items"] = [
 	{
 		key: "1",
-		label: <Link to="/me/new-post">Tạo bài viết mới</Link>,
+		label: (
+			<Link to="/me/new-post">
+				<Button className="w-full">Tạo bài viết mới</Button>
+			</Link>
+		),
 	},
 	{
 		key: "2",
-		label: <Link to="/me/posts">Quản lí bài viết</Link>,
+		label: (
+			<Link to="/me/posts">
+				<Button className="w-full">Quản lí bài viết</Button>
+			</Link>
+		),
 	},
 	{
 		key: "3",
-		label: <Link to="/me/posts/deleted">Bài viết đã xóa</Link>,
+		label: (
+			<Link className="hover:text-blue-500" to="/me/posts/deleted">
+				<Button className="w-full">Bài viết đã xóa</Button>
+			</Link>
+		),
 	},
 ];
 
 const Account = () => {
 	const user = useSelector(userSelector);
-	const userData = user;
+	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
 	const dispatch = useDispatch();
 
-	if (!userData) return <></>;
+	if (!user) return <></>;
 
+	// Menu items
 	const handleLogoutClick = async () => {
 		await logout(dispatch);
 	};
@@ -42,21 +58,31 @@ const Account = () => {
 		),
 	};
 
-	const menuItems = userData.isAdmin
+	const editButton = {
+		key: "edit",
+		label: (
+			<Button onClick={() => setIsModalOpen(true)}>Cập nhật thông tin</Button>
+		),
+	};
+
+	const menuItems = user.isAdmin
 		? {
-				items: [...adminItems, logoutButton],
+				items: [...adminItems, editButton, logoutButton],
 		  }
 		: {
-				items: [logoutButton],
+				items: [editButton, logoutButton],
 		  };
+
 	return (
 		<>
 			<Dropdown menu={menuItems} placement="bottom" trigger={["click"]}>
 				<button className="flex items-center gap-2 button-normal">
-					<UserAvatar source={userData.avatar_path} size={30} />
-					<p className="text-normal">{userData.name}</p>
+					<UserAvatar source={user.avatar_path} size={30} />
+					<p className="text-normal">{user.name}</p>
 				</button>
 			</Dropdown>
+
+			<UserEditor isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
 		</>
 	);
 };
