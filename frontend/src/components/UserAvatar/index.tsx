@@ -21,7 +21,7 @@ const UserAvatar = ({
 
 	return (
 		<div className="overflow-hidden rounded-full w-fit">
-			<img width={size} height={size} className="block object-contain rounded-full" src={animalSrc ? animalSrc : source} />
+			<Avatar size={size} src={animalSrc ? animalSrc : source} />
 		</div>
 	);
 };

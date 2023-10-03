@@ -35,22 +35,28 @@ const UserEditor = ({ isOpen, setIsOpen }: UserEditorType) => {
 			key={img}
 			onClick={() => setSelectImg(img)}
 			className={
-				" grid items-center cursor-pointer transition-all bg-slate-50 px-2 border-2 hover:border-primary rounded-md [&.active]:border-primary " +
+				"group grid py-2 place-items-center cursor-pointer transition-all bg-slate-50 px-2 border-2 hover:border-primary rounded-md [&.active]:border-primary " +
 				(!img.localeCompare(selectImg) ? " active" : " ")
 			}
 		>
-			<UserAvatar key={img} size={50} source={img} />
+			<UserAvatar key={img} size={40} source={img} />
+			<span>{img}</span>
 		</div>
 	));
 
 	// Handle fisnish
 	const axiosJWT = createAxiosJWT(user, dispatch);
 	const handleUpdate = async (data: Partial<User>) => {
-		const res = await updateUser(user.username, data, user.accessToken, axiosJWT);
+		const res = await updateUser(
+			user.username,
+			data,
+			user.accessToken,
+			axiosJWT
+		);
 		if (res) {
 			messageApi.success("Đã cập nhật thông tin thành công");
-			console.log(res.data)
-			if (res.data) dispatch(loginSuccess({...user, ...res.data}));
+			console.log(res.data);
+			if (res.data) dispatch(loginSuccess({ ...user, ...res.data }));
 		} else messageApi.error("Cập nhật thất bại, có lỗi xảy ra");
 	};
 
@@ -87,7 +93,7 @@ const UserEditor = ({ isOpen, setIsOpen }: UserEditorType) => {
 						<Input />
 					</Form.Item>
 					<Form.Item name={["user", "avatar_path"]} label="Ảnh đại diện">
-						<div className="flex gap-2">{imgOptions}</div>
+						<div className="grid grid-cols-3 gap-2 md:grid-cols-6">{imgOptions}</div>
 					</Form.Item>
 					<Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
 						<Button className="mr-4" onClick={() => setIsOpen(false)}>
