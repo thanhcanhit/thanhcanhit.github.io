@@ -3,19 +3,84 @@
 
 <head>
   <meta charset="UTF-8" />
+
+  <!-- Favicon -->
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <!-- META TAGS -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="title" content="thanhcanhit">
+  <meta name="description" content="Phần mềm, website thú vị và source code của chúng.">
+  <meta name="keywords"
+    content="thanhcanhit, software engineer, website, html, css, js, react, typescript, tailwindcss, nodejs">
+  <meta name="robots" content="index, follow">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="language" content="Vietnamese">
+  <meta name="revisit-after" content="90 days">
+  <meta name="author" content="thanhcanhit">
+
+  <!-- Primary Meta Tags -->
   <title>thanhcanhit</title>
-  <script type="module" crossorigin src="/assets/index-f1c20efc.js"></script>
-  <link rel="stylesheet" href="/assets/index-11c0985a.css">
+  <meta name="title" content="thanhcanhit" />
+  <meta name="description"
+    content="Đây là blog cá nhân của thanhcanhit (Nguyễn Thanh Cảnh) sinh viên Khóa 17 IUH. Blog này là nơi chứa những dự án phần mềm, website và source code của chúng trong  suốt quá trình học tập của mình." />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://thanhcanhit.github.io/" />
+  <meta property="og:title" content="thanhcanhit" />
+  <meta property="og:description"
+    content="Đây là blog cá nhân của thanhcanhit (Nguyễn Thanh Cảnh) sinh viên Khóa 17 IUH. Blog này là nơi chứa những dự án phần mềm, website và source code của chúng trong  suốt quá trình học tập của mình." />
+  <meta property="og:image" content="/logo.png" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://thanhcanhit.github.io/" />
+  <meta property="twitter:title" content="thanhcanhit" />
+  <meta property="twitter:description"
+    content="Đây là blog cá nhân của thanhcanhit (Nguyễn Thanh Cảnh) sinh viên Khóa 17 IUH. Blog này là nơi chứa những dự án phần mềm, website và source code của chúng trong  suốt quá trình học tập của mình." />
+  <meta property="twitter:image" content="/logo.png" />
+
+  <script type="module" crossorigin src="/assets/index-bf461a18.js"></script>
+  <link rel="stylesheet" href="/assets/index-dd86d554.css">
 </head>
 
 <body>
   <div id="root"></div>
   
+  <!-- Messenger Plugin chat Code -->
+  <div id="fb-root"></div>
+
+  <!-- Your Plugin chat code -->
+  <div id="fb-customer-chat" class="fb-customerchat">
+  </div>
+
+  <script>
+    var chatbox = document.getElementById('fb-customer-chat');
+    chatbox.setAttribute("page_id", "114453931476178");
+    chatbox.setAttribute("attribution", "biz_inbox");
+  </script>
+
+  <!-- Your SDK code -->
+  <script>
+    window.fbAsyncInit = function () {
+      FB.init({
+        xfbml: true,
+        version: 'v18.0'
+      });
+    };
+
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
 </body>
 
 </html>
