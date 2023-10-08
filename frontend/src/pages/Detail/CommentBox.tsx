@@ -30,6 +30,18 @@ const CommentBox = ({ onSubmit }: CommentBoxType) => {
 		setRating(5);
 	};
 
+	const nameInput = !user && (
+		<Input
+			showCount
+			value={name}
+			maxLength={50}
+			onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+				setName(e.target.value)
+			}
+			placeholder="Tên hiển thị (optional)"
+		/>
+	);
+
 	return (
 		<div className="flex flex-col gap-1 py-4">
 			<p className="text-sm">Nhập bình luận của bạn:</p>
@@ -39,17 +51,8 @@ const CommentBox = ({ onSubmit }: CommentBoxType) => {
 				value={rating}
 				onChange={(value) => setRating(value)}
 			/>
-			{!user && (
-				<Input
-					showCount
-					value={name}
-					maxLength={50}
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-						setName(e.target.value)
-					}
-					placeholder="Tên hiển thị (optional)"
-				/>
-			)}
+
+			{nameInput}
 
 			<Input.TextArea
 				value={content}
