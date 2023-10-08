@@ -23,7 +23,7 @@ app.use(
 		origin: [
 			"http://127.0.0.1:5173",
 			"http://thanhcanhit.id.vn",
-			"http://thanhcanhit.github.io",
+			"https://thanhcanhit.github.io",
 		],
 	})
 );
