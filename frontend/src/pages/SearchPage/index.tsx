@@ -37,7 +37,7 @@ const SearchPage = () => {
 	return (
 		<div className="container">
 			<div className="flex flex-col items-center justify-center gap-4 pt-4 md:gap-20 md:flex-row">
-				<img src={searchImg} className="w-[200px] md:w-[250px]" />
+				<img src={searchImg} alt="search illustrator" className="w-[200px] md:w-[250px]" />
 				<div className="text-xl font-semibold md:text-3xl text-normal">
 					<h1>Có {posts?.length} kết quả tìm kiếm cho:</h1>
 					<span className="block my-2 text-xl">

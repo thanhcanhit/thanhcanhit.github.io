@@ -84,6 +84,7 @@ const PostEditor = ({ onFinish, post }: PostEditorType) => {
 						content={
 							<img
 								width={300}
+								alt="preview"
 								src={imgPath}
 								className="object-contain"
 								onError={({ currentTarget }) => {

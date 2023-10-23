@@ -24,6 +24,7 @@ const PostCard = ({ post }: PostCardType) => {
 			>
 				<img
 					className="object-cover object-top w-full rounded-t-lg h-60 md:h-full md:w-48 md:rounded-none md:rounded-l-lg"
+					alt="post avatar"
 					src={post.img_path}
 					onError={({ currentTarget }) => {
 						currentTarget.onerror = null; // prevents looping

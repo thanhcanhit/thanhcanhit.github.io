@@ -1,10 +1,11 @@
-import DeletedPostManager from "../pages/DeletedPostManager";
-import Detail from "../pages/Detail";
-import Home from "../pages/Home";
-import NewPost from "../pages/NewPost";
-import PostManagerPage from "../pages/PostManagerPage";
-import SearchPage from "../pages/SearchPage";
-import UpdatePost from "../pages/UpdatePost";
+import React from "react";
+const UpdatePost = React.lazy(() => import("../pages/UpdatePost"));
+const DeletedPostManager = React.lazy(() => import("../pages/DeletedPostManager"));
+const Detail = React.lazy(() => import("../pages/Detail"));
+const Home = React.lazy(() => import("../pages/Home"));
+const NewPost = React.lazy(() => import("../pages/NewPost"));
+const PostManagerPage = React.lazy(() => import("../pages/PostManagerPage"));
+const SearchPage = React.lazy(() => import("../pages/SearchPage"));
 
 type Props = {
 	children?: React.ReactNode;

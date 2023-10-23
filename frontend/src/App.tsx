@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "./pages/Layouts/MainLayout";
 import routes from "./routes";
 import GoTopButton from "./components/GoTopButton";
+import { Suspense } from "react";
+import { Spin } from "antd";
 
 const routesRendered = routes.map((route) => {
 	// By default, route.layout is undefined
@@ -21,7 +23,13 @@ const routesRendered = routes.map((route) => {
 	// If layout is null, return just element
 	else if (route.layout === null) element = <route.element />;
 
-	return <Route key={route.path} path={route.path} element={element} />;
+	return (
+		<Route
+			key={route.path}
+			path={route.path}
+			element={<Suspense fallback={<Spin />}>{element}</Suspense>}
+		/>
+	);
 });
 
 function App() {

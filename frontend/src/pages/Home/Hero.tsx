@@ -14,7 +14,7 @@ const Hero = () => {
 
 	return (
 		<div className="container grid items-center grid-cols-1 py-8 md:grid-cols-2">
-			<img src={heroImg} className="w-full animate-float" />
+			<img src={heroImg} alt="hero" className="w-full animate-float" />
 			<div>
 				<section className="bg-normal">
 					<div className="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16">
