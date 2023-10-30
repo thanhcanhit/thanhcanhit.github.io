@@ -7,13 +7,13 @@ const authRoute = require("./authRoute.js");
 const meRoute = require("./meRoute.js");
 
 const declareEndpoint = (app) => {
-	app.use("/me", meRoute);
-	app.use("/user", userRoute);
-	app.use("/post", postRoute);
-	app.use("/comment", commentRoute);
-	app.use("/tag", tagRoute);
-	app.use("/auth", authRoute);
-	app.use("/", mainRoute);
+	app.use("/api/me", meRoute);
+	app.use("/api/user", userRoute);
+	app.use("/api/post", postRoute);
+	app.use("/api/comment", commentRoute);
+	app.use("/api/tag", tagRoute);
+	app.use("/api/auth", authRoute);
+	app.use("/api/", mainRoute);
 };
 
 module.exports = declareEndpoint;
