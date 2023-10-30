@@ -17,6 +17,7 @@ const FavoriteQuote = () => {
 			</blockquote>
 			<figcaption className="flex items-center justify-center mt-6 space-x-3">
 				<img
+					loading="lazy"
 					className="w-6 h-6 rounded-full"
 					src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/authors/1658495060i/5348195._UX200_CR0,0,200,200_.jpg"
 					alt="profile picture"

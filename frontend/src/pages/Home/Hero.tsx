@@ -14,7 +14,12 @@ const Hero = () => {
 
 	return (
 		<div className="container grid items-center grid-cols-1 py-8 md:grid-cols-2">
-			<img src={heroImg} alt="hero" className="w-full animate-float" />
+			<img
+				loading="lazy"
+				src={heroImg}
+				alt="hero"
+				className="w-full animate-float"
+			/>
 			<div>
 				<section className="bg-normal">
 					<div className="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16">
@@ -44,7 +49,10 @@ const Hero = () => {
 								</a>
 							</Popover>
 							<Popover content="Đến phần thông tin ở cuối trang">
-								<button onClick={scrollToBottom} className="flex items-center justify-center gap-2 button-primary">
+								<button
+									onClick={scrollToBottom}
+									className="flex items-center justify-center gap-2 button-primary"
+								>
 									About me
 									<IoIosArrowDown className="relative top-[2px]" />
 								</button>

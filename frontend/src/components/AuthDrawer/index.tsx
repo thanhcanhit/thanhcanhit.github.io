@@ -108,7 +108,11 @@ const AuthDrawer = ({ open, type, setOpen, setType }: AuthDrawerType) => {
 				open={open}
 			>
 				<div className="w-full mb-8">
-					<img src={type === "login" ? loginIllus : registerIllus} alt="illustrator"/>
+					<img
+						loading="lazy"
+						src={type === "login" ? loginIllus : registerIllus}
+						alt="illustrator"
+					/>
 				</div>
 				{type === "login" ? (
 					<Form

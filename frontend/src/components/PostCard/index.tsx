@@ -23,6 +23,7 @@ const PostCard = ({ post }: PostCardType) => {
 				className="flex flex-col h-full bg-white border border-gray-200 rounded-lg shadow cursor-pointer md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
 			>
 				<img
+					loading="lazy"
 					className="object-cover object-top w-full rounded-t-lg h-60 md:h-full md:w-48 md:rounded-none md:rounded-l-lg"
 					alt="post avatar"
 					src={post.img_path}
