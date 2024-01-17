@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, HashRouter } from "react-router-dom";
 import MainLayout from "./pages/Layouts/MainLayout";
 import routes from "./routes";
 import GoTopButton from "./components/GoTopButton";
@@ -34,10 +34,10 @@ const routesRendered = routes.map((route) => {
 
 function App() {
 	return (
-		<BrowserRouter>
+		<HashRouter >
 			<Routes>{routesRendered}</Routes>
 			<GoTopButton />
-		</BrowserRouter>
+		</HashRouter>
 	);
 }
 
