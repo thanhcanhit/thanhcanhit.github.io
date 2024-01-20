@@ -27,14 +27,26 @@ const routesRendered = routes.map((route) => {
 		<Route
 			key={route.path}
 			path={route.path}
-			element={<Suspense fallback={<Spin />}>{element}</Suspense>}
+			element={
+				<Suspense
+					fallback={
+						<MainLayout>
+							<div className="container flex items-center justify-center mx-auto w-lvw h-lvh p-8">
+								<Spin />
+							</div>
+						</MainLayout>
+					}
+				>
+					{element}
+				</Suspense>
+			}
 		/>
 	);
 });
 
 function App() {
 	return (
-		<HashRouter >
+		<HashRouter>
 			<Routes>{routesRendered}</Routes>
 			<GoTopButton />
 		</HashRouter>
