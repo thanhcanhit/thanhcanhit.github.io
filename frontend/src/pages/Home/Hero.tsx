@@ -1,6 +1,7 @@
 import { IoIosArrowDown } from "react-icons/io";
 import heroImg from "./imgs/hero.svg";
 import { AiFillGithub } from "react-icons/ai";
+import { RiProfileFill } from "react-icons/ri";
 import { Popover } from "antd";
 
 const Hero = () => {
@@ -46,6 +47,16 @@ const Hero = () => {
 								>
 									<AiFillGithub />
 									Github
+								</a>
+							</Popover>
+							<Popover content="Xem CV Online">
+								<a
+									href="https://www.topcv.vn/xem-cv/BVVbAQhSBgdRVVNQAFcLBFMAXQcHAgNSC1YGUQ1953"
+									target="_blank"
+									className="inline-flex items-center justify-center gap-2 px-5 py-3 text-base font-medium text-center text-gray-900 transition-colors bg-white border border-gray-300 rounded-lg dark:bg-black hover:bg-gray-200 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+								>
+									<RiProfileFill />
+									My CV
 								</a>
 							</Popover>
 							<Popover content="Đến phần thông tin ở cuối trang">

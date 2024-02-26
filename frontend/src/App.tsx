@@ -30,11 +30,9 @@ const routesRendered = routes.map((route) => {
 			element={
 				<Suspense
 					fallback={
-						<MainLayout>
 							<div className="container flex items-center justify-center mx-auto w-lvw h-lvh p-8">
 								<Spin />
 							</div>
-						</MainLayout>
 					}
 				>
 					{element}
